@@ -1,4 +1,4 @@
-# IATD Microcredential: Cloud Networking-1
+# IATD Microcredential: Cloud Networking
 ## Learning Outcome 1: Design and Implement Core Network Infrastructure
 
 This directory contains hands-on lab exercises for Learning Outcome 1 of the IATD Microcredential Cloud Networking course. These labs are designed to provide practical experience with designing and implementing core network infrastructure in Azure, as well as supplementary labs for AWS and GCP.
