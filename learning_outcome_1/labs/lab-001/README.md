@@ -1,33 +1,23 @@
-# IATD Microcredential: Cloud Networking - Lab 1: Virtual Network Creation
+## IATD Microcredential Cloud Networking: Lab 1 - Virtual Network Creation
 
-## Overview
+**Objective:** This lab guides you through the process of creating an Azure Virtual Network (VNet), the core building block for your private network. You'll learn to create VNets using the Azure Portal, Azure PowerShell, Azure CLI, and ARM templates.
 
-This lab guides you through the process of creating an Azure Virtual Network (VNet), the core building block for your private network. You'll learn to create VNets using the Azure Portal, Azure PowerShell, Azure CLI, and ARM templates.
+**Estimated Time:** 45 - 60 minutes
 
-## Objectives
-
-*   Create a VNet using the Azure Portal.
-*   Create a VNet using Azure PowerShell (via Cloud Shell).
-*   Create a VNet using Azure CLI (via Cloud Shell).
-*   Create a VNet using an ARM template (deployed through Cloud Shell).
-*   Verify VNet configuration using the Azure Portal.
-
-## Duration
-
-Estimated Completion Time: 45 - 60 minutes
-
-## Prerequisites
+**Prerequisites:**
 
 1.  **Azure Subscription:** Requires an active Azure subscription. A free account is available at [https://azure.microsoft.com/free/](https://azure.microsoft.com/free/).
 
-## Lab Conventions
+**Let's get started!**
+
+### Lab Conventions
 
 *   **Azure Cloud Shell:** All PowerShell and CLI interactions will occur within the Azure Cloud Shell environment.
 *   **Naming Conventions:** Resource names follow the convention `iatd_labs_01_*`.
 *   **IP Address Range:** The `172.16.x.x` range will be used.
 *   **Location:** Choose a consistent Azure region.
 
-### Resource Naming
+#### Resource Naming
 
 *   **Resource Group:** `iatd_labs_01_rg`
 *   **Virtual Network (Portal):** `iatd_labs_01_vnet_portal`
@@ -39,9 +29,7 @@ Estimated Completion Time: 45 - 60 minutes
 *   **Virtual Network (ARM):** `iatd_labs_01_vnet_arm`
 *   **Subnet (ARM):** `iatd_labs_01_subnet_arm`
 
-## Lab Steps
-
-### Task 1: VNet Creation - Azure Portal
+### Part 1: VNet Creation - Azure Portal
 
 1.  **Sign in to the Azure Portal:** Browse to [https://portal.azure.com/](https://portal.azure.com/) and sign in.
 2.  **Create Resource Group:**
@@ -66,7 +54,7 @@ Estimated Completion Time: 45 - 60 minutes
     *   Click **Review + create**, then **Create**.
 4.  **Verify:** Go to the `iatd_labs_01_rg` resource group and select the `iatd_labs_01_vnet_portal` Virtual Network to see the settings
 
-### Task 2: VNet Creation - Azure PowerShell
+### Part 2: VNet Creation - Azure PowerShell
 
 1.  **Open Cloud Shell:** In the Azure Portal, click the Cloud Shell icon. Select PowerShell if prompted.
 
@@ -104,15 +92,37 @@ Estimated Completion Time: 45 - 60 minutes
     ```powershell
     Get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $resourceGroupName
     ```
-    Review output to confirm the correct VNet settings.
+    
+    **Example Output (truncated):**
+    
+    ```
+    Name              : iatd_labs_01_vnet_ps
+    ResourceGroupName : iatd_labs_01_rg
+    Location          : eastus
+    Id                : /subscriptions/your_subscription_id/resourceGroups/iatd_labs_01_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_ps
+    Etag              : W/"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    ResourceGuid      : yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy
+    ProvisioningState : Succeeded
+    ...
+    Subnets           : [
+                           {
+                             "Name": "iatd_labs_01_subnet_ps",
+                             "Etag": "W/\"zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz\"",
+                             "Id": "/subscriptions/your_subscription_id/resourceGroups/iatd_labs_01_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_ps/subnets/iatd_labs_01_subnet_ps",
+                             "AddressPrefix": "172.16.1.0/24",
+                             ...
+                           }
+                         ]
+    ...
+    ```
 
-### Task 3: VNet Creation - Azure CLI
+### Part 3: VNet Creation - Azure CLI
 
 1.  **Open Cloud Shell:** Open Cloud Shell in the Azure Portal. Choose **Bash** this time.
 
 2.  **Set Variables:**
 
-    ```azurecli
+    ```bash
     RESOURCE_GROUP="iatd_labs_01_rg"
     VNET_NAME="iatd_labs_01_vnet_cli"
     LOCATION="eastus" # Your Region
@@ -123,13 +133,13 @@ Estimated Completion Time: 45 - 60 minutes
 
 3.  **Create Resource Group (if it doesn't exist):**
 
-    ```azurecli
+    ```bash
     az group create --name $RESOURCE_GROUP --location $LOCATION --output json --only-show-errors
     ```
 
 4.  **Create Virtual Network:**
 
-    ```azurecli
+    ```bash
     az network vnet create \
       --resource-group $RESOURCE_GROUP \
       --name $VNET_NAME \
@@ -141,11 +151,35 @@ Estimated Completion Time: 45 - 60 minutes
 
 5.  **Verify:**
 
-    ```azurecli
+    ```bash
     az network vnet show --name $VNET_NAME --resource-group $RESOURCE_GROUP
     ```
+    
+    **Example Output:**
+    
+    ```json
+    {
+      "addressSpace": {
+        "addressPrefixes": [
+          "172.16.2.0/16"
+        ]
+      },
+      "id": "/subscriptions/your_subscription_id/resourceGroups/iatd_labs_01_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_cli",
+      "name": "iatd_labs_01_vnet_cli",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "iatd_labs_01_rg",
+      "subnets": [
+        {
+          "addressPrefix": "172.16.2.0/24",
+          "id": "/subscriptions/your_subscription_id/resourceGroups/iatd_labs_01_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_cli/subnets/iatd_labs_01_subnet_cli",
+          "name": "iatd_labs_01_subnet_cli",
+          "provisioningState": "Succeeded"
+        }
+      ]
+    }
+    ```
 
-### Task 4: VNet Creation - ARM Template
+### Part 4: VNet Creation - ARM Template
 
 1.  **Create ARM Template File:**
 
@@ -228,7 +262,7 @@ Estimated Completion Time: 45 - 60 minutes
 
 2.  **Deploy ARM Template:**
 
-    ```azurecli
+    ```bash
     RESOURCE_GROUP="iatd_labs_01_rg"
     TEMPLATE_FILE="vnet_template.json"
 
@@ -239,18 +273,28 @@ Estimated Completion Time: 45 - 60 minutes
 
 3.  **Verify:**
 
-    ```azurecli
+    ```bash
     az network vnet show --name "iatd_labs_01_vnet_arm" --resource-group $RESOURCE_GROUP
     ```
 
-## Post-Lab Clean Up
+### Post-Lab: Cleanup
 
-Delete the `iatd_labs_01_rg` resource group to avoid incurring unwanted costs.
+To avoid incurring unnecessary costs, it's essential to clean up the resources created during this lab.
 
-*   **Azure Portal:** Locate the Resource Group and Delete from the portal..
-*   **PowerShell:** `Remove-AzResourceGroup -Name "iatd_labs_01_rg" -Force`
-*   **CLI:** `az group delete --name iatd_labs_01_rg --yes`
+1.  **Delete Resource Group:**
 
-## Conclusion
+    *   **Azure Portal:** Locate the Resource Group and Delete from the portal.
+    
+    *   **PowerShell:**
+    
+        ```powershell
+        Remove-AzResourceGroup -Name "iatd_labs_01_rg" -Force
+        ```
+        
+    *   **CLI:**
+    
+        ```bash
+        az group delete --name iatd_labs_01_rg --yes
+        ```
 
-You have now successfully created Azure Virtual Networks via the Azure Portal, Azure PowerShell, Azure CLI, and using ARM Templates. Congratulations - you've laid a key foundation in Azure Networking! Remember to clean up to avoid incurring any testcharges.
+**Congratulations!** You have now successfully created Azure Virtual Networks via the Azure Portal, Azure PowerShell, Azure CLI, and using ARM Templates. You've laid a key foundation in Azure Networking!
