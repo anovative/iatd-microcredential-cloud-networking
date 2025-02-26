@@ -1,4 +1,4 @@
-**Lab 4: Setting up a Site-to-Site VPN Between Azure and AWS**
+## Lab 4: Setting up a Site-to-Site VPN Between Azure and AWS ##
 
 **Objective:**
 
