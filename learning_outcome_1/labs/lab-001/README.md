@@ -1,5 +1,3 @@
-Okay, here's a refined and comprehensive lab guide focused on creating Virtual Networks (VNets) in Azure using various methods. This version prioritizes clarity, conciseness, and adheres to your requirements for using Cloud Shell, specifying IP ranges, and adhering to the naming convention.
-
 # IATD Microcredential: Cloud Networking Lab 1 - Creating a Virtual Network
 
 ## Overview
