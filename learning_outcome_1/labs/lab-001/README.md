@@ -1,10 +1,8 @@
-Okay, I will generate a detailed, purely text-based lab guide focusing on creating Azure Virtual Networks using the Portal, PowerShell, CLI, and ARM templates. This guide will focus on Cloud Shell, consistent naming conventions, and specific IP addressing. There will be **no image placeholders.**
-
-# IATD Microcredential: Cloud Networking - Creating Azure Virtual Networks
+# IATD Microcredential: Cloud Networking - Lab 1: Creating Azure Virtual Networks
 
 ## Overview
 
-This lab guides you through creating Azure Virtual Networks (VNets) using four methods: the Azure Portal, Azure PowerShell, Azure CLI, and Azure Resource Manager (ARM) templates. By the end of this lab, you’ll understand VNet creation and configuration, enabling you to choose the method that best suits your needs. We'll use Azure Cloud Shell for a consistent environment.
+This lab guides you through creating Azure Virtual Networks (VNets) using four methods: the Azure Portal, Azure PowerShell, Azure CLI, and Azure Resource Manager (ARM) templates. After this lab, you’ll understand VNet creation and configuration. We'll use Azure Cloud Shell for a consistent experience.
 
 ## Objectives
 
@@ -20,12 +18,12 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
 
 ## Prerequisites
 
-1.  **Azure Subscription:** An active Azure subscription is required.  Create a free Azure account at [https://azure.microsoft.com/free/](https://azure.microsoft.com/free/) if you don't have one.
+1.  **Azure Subscription:** An active Azure subscription is required. Create a free Azure account at [https://azure.microsoft.com/free/](https://azure.microsoft.com/free/) if needed.
 
 ## Lab Setup & Conventions
 
-*   We will use Azure Cloud Shell for PowerShell and CLI.
-*   Resource names will follow the `iatd_labs_01_*` convention.
+*   Use Azure Cloud Shell for PowerShell and CLI interactions.
+*   All resource names follow the `iatd_labs_01_*` convention.
 *   The `172.16.x.x` IP address range will be used for VNets and subnets.
 
 ### Naming Conventions
@@ -43,7 +41,7 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
 ### General Instructions
 
 1.  **Azure Portal Access:** Access the Azure Portal at [https://portal.azure.com/](https://portal.azure.com/) with your Azure account.
-2.  **Cloud Shell Activation:** Activate Cloud Shell from within the Azure Portal when PowerShell or CLI commands are required.
+2.  **Cloud Shell Activation:** Activate Cloud Shell within the Azure Portal when PowerShell or CLI commands are required.
 
 ## Lab Execution
 
@@ -77,7 +75,7 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
             *   Change the subnet address range to `172.16.0.0/24`.
         *   Click **Save**.
     *   Click **Review + create** then **Create**.
-5.  **Verify the VNet:** After deployment, navigate to the `iatd_labs_01_rg` resource group and find `iatd_labs_01_vnet_portal`. Click the VNet to review its details, address space, and subnet configuration.
+5.  **Verify the VNet:** After deployment, navigate to the `iatd_labs_01_rg` resource group and find `iatd_labs_01_vnet_portal`. Click the VNet to review details, address space, and subnet configuration.
 
 ### Task 2: Creating a Virtual Network using Azure PowerShell
 
@@ -100,8 +98,7 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
 3.  **Create Resource Group (if it doesn't exist):**
     ```powershell
     New-AzResourceGroup -Name $resourceGroupName -Location $location -ErrorAction SilentlyContinue
-    ```
-    *Example Output:*
+    ```    *Example Output:*
 
     ```
     ResourceGroupName : iatd_labs_01_rg
@@ -147,13 +144,13 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
     ```powershell
     Get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $resourceGroupName
     ```
-    Inspect the output to confirm VNet creation with the correct settings.
+    Inspect the output to confirm VNet creation.
 
 ### Task 3: Creating a Virtual Network using Azure CLI
 
 1.  **Launch Azure Cloud Shell:** Follow the same steps as in Task 2, but choose **Bash**.
 
-2.  **Set Variables:** Define the following variables in Cloud Shell:
+2.  **Set Variables:** Define these variables in Cloud Shell:
 
     ```azurecli
     RESOURCE_GROUP="iatd_labs_01_rg"
@@ -167,8 +164,7 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
 3.  **Create Resource Group (if it doesn't exist):**
     ```azurecli
     az group create --name $RESOURCE_GROUP --location $LOCATION --output json --only-show-errors
-    ```
-    *Example Output:*
+    ```    *Example Output:*
 
     ```json
     {
@@ -221,7 +217,7 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
     ```azurecli
     az network vnet show --name $VNET_NAME --resource-group $RESOURCE_GROUP
     ```
-    Review the output to verify the VNet's configuration.
+    Review the output to confirm the VNet.
 
 ### Task 4: Creating a Virtual Network using Azure Resource Manager (ARM) Templates
 
@@ -232,7 +228,7 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
         ```
         This opens the Cloud Shell editor.
 
-    *   Paste the following JSON code into the `vnet_template.json` file:
+    *   Paste the JSON code into `vnet_template.json`:
 
         ```json
         {
@@ -304,7 +300,7 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
 
     *   Save the file (Ctrl+S or Cmd+S).
 
-2.  **Deploy ARM Template:** Use the following Azure CLI command to deploy the template:
+2.  **Deploy ARM Template:** Deploy the template using Azure CLI:
 
     ```azurecli
     RESOURCE_GROUP="iatd_labs_01_rg"
@@ -375,14 +371,14 @@ This lab guides you through creating Azure Virtual Networks (VNets) using four m
           ...
     ```
 
-3.  **Verify the Virtual Network:** Use the Azure Portal, Azure PowerShell, or Azure CLI to verify the VNet's creation with the settings defined in the ARM template.  For example, using Azure CLI:
+3.  **Verify the Virtual Network:** Verify the VNet creation using the Azure Portal, Azure PowerShell, or Azure CLI.  For example, using Azure CLI:
     ```azurecli
     az network vnet show --name "iatd_labs_01_vnet_arm" --resource-group $RESOURCE_GROUP
     ```
 
 ## Post-Lab Tasks: Clean Up Resources
 
-To avoid incurring costs, delete the resources created in this lab. Delete the resource group to ensure removal of all resources.
+Delete the created resources to avoid costs.  It's best to delete the entire resource group.
 
 1.  **Delete the Resource Group:**
 
@@ -406,4 +402,4 @@ To avoid incurring costs, delete the resources created in this lab. Delete the r
 
 ## Conclusion
 
-You've created Azure Virtual Networks using the Azure Portal, Azure PowerShell, Azure CLI, and ARM Templates. You now understand how to provision and configure VNets. Clean up your resources after the lab to avoid costs.
+You've created Azure Virtual Networks using the Azure Portal, Azure PowerShell, Azure CLI, and ARM Templates. You should understand how to provision and configure VNets using different approaches. Always clean up your Azure resources afterward. This completes Lab 1.
