@@ -1,0 +1,17 @@
+# Ignore lab objectives file
+learning_outcome_1/lab_objectives.md
+
+# General files to ignore
+.DS_Store
+*.log
+*.tmp
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local environment files
+.env
+.env.local
