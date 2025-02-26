@@ -59,6 +59,10 @@ Each lab follows a consistent structure:
 **Objective:** In this lab, you will learn how to create an Azure DNS zone, add various types of DNS records, and delegate the zone to Azure DNS.  
 **Estimated Time:** 60 - 75 minutes
 
+### [Lab 9: Implementing Private DNS Zones in Azure](/learning_outcome_1/labs/lab-009)
+**Objective:** In this lab, you will learn how to create a private DNS zone in Azure, link it to a virtual network, add DNS records, and verify name resolution from a virtual machine within the network.  
+**Estimated Time:** 45-60 minutes
+
 ## Resource Naming Conventions
 
 Throughout these labs, resources follow a consistent naming convention:
