@@ -30,6 +30,22 @@ If you already have a resource group with a VNet and VM, skip this task. Otherwi
     az group create --name iatd_labs_05_rg --location australiaeast
     ```
 
+    **Example Output:**
+    
+    ```json
+    {
+      "id": "/subscriptions/your_subscription_id/resourceGroups/iatd_labs_05_rg",
+      "location": "australiaeast",
+      "managedBy": null,
+      "name": "iatd_labs_05_rg",
+      "properties": {
+        "provisioningState": "Succeeded"
+      },
+      "tags": null,
+      "type": "Microsoft.Resources/resourceGroups"
+    }
+    ```
+
 ### Part 2: Create a Virtual Network (If You Don't Have One)
 
 If you already have a VNet, skip this task. Otherwise, create one:
@@ -46,6 +62,36 @@ If you already have a VNet, skip this task. Otherwise, create one:
       --subnet-name iatd_labs_05_subnet \
       --subnet-prefixes 172.16.0.0/24 \
       --location australiaeast
+    ```
+    
+    **Example Output:**
+    
+    ```json
+    {
+      "newVNet": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "172.16.0.0/16"
+          ]
+        },
+        "enableDdosProtection": false,
+        "id": "/subscriptions/your_subscription_id/resourceGroups/iatd_labs_05_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_05_vnet",
+        "location": "australiaeast",
+        "name": "iatd_labs_05_vnet",
+        "provisioningState": "Succeeded",
+        "resourceGroup": "iatd_labs_05_rg",
+        "subnets": [
+          {
+            "addressPrefix": "172.16.0.0/24",
+            "id": "/subscriptions/your_subscription_id/resourceGroups/iatd_labs_05_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_05_vnet/subnets/iatd_labs_05_subnet",
+            "name": "iatd_labs_05_subnet",
+            "provisioningState": "Succeeded",
+            "resourceGroup": "iatd_labs_05_rg"
+          }
+        ],
+        "type": "Microsoft.Network/virtualNetworks"
+      }
+    }
     ```
 
 ### Part 3: Create a Virtual Machine (If You Don't Have One)
@@ -64,6 +110,22 @@ az vm create \
   --vnet-name iatd_labs_05_vnet \
   --subnet iatd_labs_05_subnet \
   --public-ip-sku Standard
+```
+
+**Example Output:**
+
+```json
+{
+  "fqdns": "",
+  "id": "/subscriptions/your_subscription_id/resourceGroups/iatd_labs_05_rg/providers/Microsoft.Compute/virtualMachines/iatd_labs_05_vm",
+  "location": "australiaeast",
+  "macAddress": "00-0D-3A-XX-XX-XX",
+  "powerState": "VM running",
+  "privateIpAddress": "172.16.0.4",
+  "publicIpAddress": "20.XX.XX.XX",
+  "resourceGroup": "iatd_labs_05_rg",
+  "zones": ""
+}
 ```
 
 ### Part 4: Assigning a Static Private IP Address to a Virtual Machine
@@ -125,6 +187,12 @@ To avoid incurring unnecessary costs, it's essential to clean up the resources c
 
     ```azurecli
     az group delete --name iatd_labs_05_rg --yes --no-wait
+    ```
+    
+    **Example Output:**
+    
+    ```
+    (No output due to --no-wait parameter, but the deletion process will start in the background)
     ```
 
 ### Verification
