@@ -1,6 +1,6 @@
 ## IATD Microcredential Cloud Networking: Lab 2 - Working with Subnets
 
-**Objective:** This lab will guide you through creating subnets in Azure using different methods, associating Network Security Groups (NSGs) and Route Tables, and configuring service endpoints.
+**Objective:** This lab will guide you through creating subnets in Azure using the Azure Portal, Azure PowerShell and Azure CLI. You'll also learn to associate Network Security Groups (NSGs) and Route Tables to control network traffic, and configure service endpoints to securely access Azure services.
 
 **Estimated Time:** 45 minutes - 1 hour
 
@@ -9,7 +9,7 @@
 1.  **Azure Subscription:** You need an active Azure subscription.
 2.  **Web Browser:** A modern web browser (Chrome, Firefox, Safari, Edge).
 3.  **Cloud Shell:** We will use Azure Cloud Shell.
-4.  **Virtual Network:** An existing virtual network is needed. If you have completed Lab 1, you can use one of the VNets created. If not, create one using the Azure Portal, PowerShell, or CLI using similar methods as in Lab 1, named `iatd_labs_02_vnet`, in resource group `iatd_labs_02_rg`. Make sure the address space is `172.16.0.0/16`.
+4.  **Virtual Network:** An existing virtual network is required. If you completed Lab 1, you can use a VNet created there. If not, create one using the Azure Portal, PowerShell, or CLI. The VNet should be named `iatd_labs_02_vnet`, in resource group `iatd_labs_02_rg`, with address space `172.16.0.0/16`.
 
 **Let's get started!**
 
@@ -28,7 +28,7 @@
 
 #### 1.2 Using Azure PowerShell via Cloud Shell
 
-1.  **Launch Cloud Shell:** In the Azure portal, click the Cloud Shell icon. Ensure you are in PowerShell environment.
+1.  **Launch Cloud Shell:** In the Azure portal, click the Cloud Shell icon. Ensure you are in the PowerShell environment.
 
 2.  **Create the Subnet:**
 
@@ -80,7 +80,7 @@
 
 #### 1.3 Using Azure CLI via Cloud Shell
 
-1.  **Launch Cloud Shell:** In the Azure portal, click the Cloud Shell icon. Ensure you are in **Bash** environment.
+1.  **Launch Cloud Shell:** In the Azure portal, click the Cloud Shell icon. Ensure you are in the **Bash** environment.
 
 2.  **Create the Subnet:**
 
@@ -219,10 +219,15 @@ To avoid incurring unnecessary costs, it's essential to clean up the resources c
 4.  **Delete Resource Group:**
 
     *   **Azure Portal:** Delete resource group `iatd_labs_02_rg`.
+
+        Alternatively, use Azure PowerShell:
+
         ```powershell
         Remove-AzResourceGroup -Name "iatd_labs_02_rg" -Force
         ```
-    *   **Azure CLI:**
+
+        Or, use Azure CLI:
+
         ```bash
         az group delete --name "iatd_labs_02_rg" --yes
         ```
