@@ -1,4 +1,3 @@
-Okay, here's a revised, comprehensive lab guide for creating Azure Virtual Networks, covering the Portal, PowerShell, CLI, and ARM templates. It’s designed to be text-based, leverage Cloud Shell, maintain consistent naming, use specific IP ranges, and offer clear instructions.
 
 # IATD Microcredential: Cloud Networking – Lab 1: Creating Virtual Networks in Azure
 
