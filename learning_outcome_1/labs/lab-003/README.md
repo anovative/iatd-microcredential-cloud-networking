@@ -1,3 +1,4 @@
+## Lab 3: Creating a Dual-Stack Virtual Network (VNet) and Virtual Machine
 
 **Objective:** This lab guides you through creating an Azure Virtual Network (VNet) with both IPv4 and IPv6 address spaces. You'll then deploy a Windows virtual machine (VM) into this dual-stack VNet, assigning both IPv4 and IPv6 addresses to the VM. This lab strategically uses the Azure Portal, Azure CLI, and PowerShell to expose you to each method.
 
