@@ -1,11 +1,11 @@
 # IATD Microcredential: Cloud Networking
 ## Learning Outcome 1: Design and Implement Core Network Infrastructure
 
-This directory contains hands-on lab exercises for Learning Outcome 1 of the IATD Microcredential Cloud Networking course. These labs are designed to provide practical experience with designing and implementing core network infrastructure in Azure.
+This directory contains hands-on lab exercises for Learning Outcome 1 of the IATD Microcredential Cloud Networking course. These labs are designed to provide practical experience with designing and implementing core network infrastructure in Azure, as well as supplementary labs for AWS and GCP.
 
 ## Learning Outcome Overview
 
-Learning Outcome 1 focuses on teaching essential skills for designing and implementing core network infrastructure in Microsoft Azure. Through these labs, you will gain hands-on experience with virtual networks, subnets, IP addressing, VPN connections, disaster recovery, and more.
+Learning Outcome 1 focuses on teaching essential skills for designing and implementing core network infrastructure across multiple cloud platforms. Through these labs, you will gain hands-on experience with virtual networks, subnets, IP addressing, VPN connections, disaster recovery, and more.
 
 ## Prerequisites
 
@@ -14,6 +14,8 @@ Before starting these labs, you should have:
 1. An active Azure subscription
 2. Basic understanding of networking concepts
 3. Familiarity with cloud computing fundamentals
+4. AWS account with appropriate permissions (for supplementary lab)
+5. GCP account with appropriate permissions (for supplementary lab)
 
 ## Lab Structure
 
@@ -26,6 +28,10 @@ Each lab follows a consistent structure:
 - Cleanup instructions to avoid unnecessary charges
 
 ## Labs
+
+### Core Labs (Azure)
+
+These labs provide a comprehensive foundation in Azure networking:
 
 ### [Lab 1: Virtual Network Creation](/learning_outcome_1/labs/lab-001)
 **Objective:** This lab guides you through the process of creating an Azure Virtual Network (VNet), the core building block for your private network. You'll learn to create VNets using the Azure Portal, Azure PowerShell, Azure CLI, and ARM templates.  
@@ -63,6 +69,18 @@ Each lab follows a consistent structure:
 **Objective:** In this lab, you will learn how to create a private DNS zone in Azure, link it to a virtual network, add DNS records, and verify name resolution from a virtual machine within the network.  
 **Estimated Time:** 45-60 minutes
 
+### Supplementary Labs (AWS & GCP)
+
+These supplementary labs extend your networking knowledge to other major cloud platforms:
+
+### [AWS VPC Fundamentals](/learning_outcome_1/labs/sup-aws/README.md)
+**Objective:** This lab guides you through creating and configuring Amazon Virtual Private Cloud (VPC), implementing public and private subnets, configuring Internet and NAT Gateways, setting up security groups and routing, and launching EC2 instances in different subnet tiers.  
+**Estimated Time:** 2-3 hours
+
+### [GCP VPC Fundamentals](/learning_outcome_1/labs/sup-gcp/README.md)
+**Objective:** This lab guides you through creating and configuring Google Cloud VPC Network, implementing subnet architecture, configuring firewall rules and Cloud NAT, deploying VM instances with different network access levels, and testing connectivity and routing.  
+**Estimated Time:** 2-3 hours
+
 ## Resource Naming Conventions
 
 Throughout these labs, resources follow a consistent naming convention:
@@ -94,3 +112,5 @@ If you encounter issues during the labs:
 - [Azure Networking Documentation](https://docs.microsoft.com/en-us/azure/networking/)
 - [Azure Architecture Center](https://docs.microsoft.com/en-us/azure/architecture/)
 - [Microsoft Learn - Azure Networking](https://docs.microsoft.com/en-us/learn/paths/azure-networking/)
+- [AWS Documentation](https://docs.aws.amazon.com/)
+- [GCP Documentation](https://cloud.google.com/docs)
