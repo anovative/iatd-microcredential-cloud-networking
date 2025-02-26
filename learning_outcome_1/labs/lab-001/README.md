@@ -1,174 +1,181 @@
-# IATD Microcredential: Cloud Networking Lab 1 - Creating a Virtual Network
+Okay, I will generate a detailed, purely text-based lab guide focusing on creating Azure Virtual Networks using the Portal, PowerShell, CLI, and ARM templates. This guide will focus on Cloud Shell, consistent naming conventions, and specific IP addressing. There will be **no image placeholders.**
+
+# IATD Microcredential: Cloud Networking - Creating Azure Virtual Networks
 
 ## Overview
 
-This hands-on lab will guide you through the process of creating Azure Virtual Networks (VNets) using multiple methods: the Azure Portal, Azure PowerShell, Azure CLI, and Azure Resource Manager (ARM) Templates. VNets are fundamental to creating your private network in Azure, providing isolation and secure communication for your resources. Upon completing this lab, you will understand the different approaches for deploying and configuring VNets to suit various operational styles.
+This lab guides you through creating Azure Virtual Networks (VNets) using four methods: the Azure Portal, Azure PowerShell, Azure CLI, and Azure Resource Manager (ARM) templates. By the end of this lab, you’ll understand VNet creation and configuration, enabling you to choose the method that best suits your needs. We'll use Azure Cloud Shell for a consistent environment.
 
 ## Objectives
 
-*   Create a VNet using the Azure Portal.
-*   Create a VNet using Azure PowerShell (via Cloud Shell).
-*   Create a VNet using Azure CLI (via Cloud Shell).
-*   Create a VNet using Azure Resource Manager (ARM) Templates (deployed from Cloud Shell).
-*   Verify the settings of all created VNets.
+*   Create a Virtual Network using the Azure Portal.
+*   Create a Virtual Network using Azure PowerShell.
+*   Create a Virtual Network using Azure CLI.
+*   Create a Virtual Network using Azure Resource Manager (ARM) templates.
+*   Verify the configurations of the created VNets.
 
 ## Duration
 
-Approximately 45 minutes - 1 hour.
+60 - 75 minutes
 
 ## Prerequisites
 
-1.  **Azure Subscription:** You need an active Azure subscription. If you don't have one, create a free account [here](https://azure.microsoft.com/free/).
+1.  **Azure Subscription:** An active Azure subscription is required.  Create a free Azure account at [https://azure.microsoft.com/free/](https://azure.microsoft.com/free/) if you don't have one.
 
-### Step-by-Step Prerequisite Setup
+## Lab Setup & Conventions
 
-#### 1. Azure Account Setup
+*   We will use Azure Cloud Shell for PowerShell and CLI.
+*   Resource names will follow the `iatd_labs_01_*` convention.
+*   The `172.16.x.x` IP address range will be used for VNets and subnets.
 
-1.  **Navigate to Azure Portal:** Open your web browser and go to [https://portal.azure.com/](https://portal.azure.com/).
-2.  **Sign In:** Sign in using your Azure account credentials. If you do not have one, follow the on-screen prompts to create a free one.
+### Naming Conventions
+
+*   **Resource Group:** `iatd_labs_01_rg`
+*   **Virtual Network (Portal):** `iatd_labs_01_vnet_portal`
+*   **Subnet (Portal):** `iatd_labs_01_subnet_portal`
+*   **Virtual Network (PowerShell):** `iatd_labs_01_vnet_ps`
+*   **Subnet (PowerShell):** `iatd_labs_01_subnet_ps`
+*   **Virtual Network (CLI):** `iatd_labs_01_vnet_cli`
+*   **Subnet (CLI):** `iatd_labs_01_subnet_cli`
+*   **Virtual Network (ARM):** `iatd_labs_01_vnet_arm`
+*   **Subnet (ARM):** `iatd_labs_01_subnet_arm`
+
+### General Instructions
+
+1.  **Azure Portal Access:** Access the Azure Portal at [https://portal.azure.com/](https://portal.azure.com/) with your Azure account.
+2.  **Cloud Shell Activation:** Activate Cloud Shell from within the Azure Portal when PowerShell or CLI commands are required.
 
 ## Lab Execution
 
-### Task 1: Creating a VNet using the Azure Portal
+### Task 1: Creating a Virtual Network using the Azure Portal
 
-1.  **Navigate to Azure Portal:** Open your web browser and go to [https://portal.azure.com/](https://portal.azure.com/).
+1.  **Sign in to the Azure Portal:** Go to [https://portal.azure.com/](https://portal.azure.com/) and log in.
+2.  **Create a Resource Group:**
+    *   In the search bar at the top, type "Resource groups" and select it.
+    *   Click **Create**.
+    *   Choose your subscription.
+    *   Enter `iatd_labs_01_rg` as the name.
+    *   Select your desired region (e.g., East US).
+    *   Click **Review + Create** then **Create**.
+3.  **Create a Virtual Network:**
+    *   In the search bar, type "Virtual networks" and select it.
+    *   Click **Create**.
+4.  **Configure the Virtual Network:**
+    *   On the **Basics** tab:
+        *   **Project details:**
+            *   Select your subscription.
+            *   Select `iatd_labs_01_rg` as the resource group.
+        *   **Instance details:**
+            *   Enter `iatd_labs_01_vnet_portal` as the name.
+            *   Choose the same region as your resource group (e.g., East US).
+    *   Go to the **IP Addresses** tab or click **Next: IP Addresses >**.
+        *   Configure the IP address space:
+            *   Change the default IPv4 address space to `172.16.0.0/16`.
+        *   Configure the subnet:
+            *   Select the default subnet.
+            *   Change the subnet name to `iatd_labs_01_subnet_portal`.
+            *   Change the subnet address range to `172.16.0.0/24`.
+        *   Click **Save**.
+    *   Click **Review + create** then **Create**.
+5.  **Verify the VNet:** After deployment, navigate to the `iatd_labs_01_rg` resource group and find `iatd_labs_01_vnet_portal`. Click the VNet to review its details, address space, and subnet configuration.
 
-2.  **Sign In:** Authenticate using your Azure account credentials.
+### Task 2: Creating a Virtual Network using Azure PowerShell
 
-3.  **Create a Resource:**
+1.  **Launch Azure Cloud Shell:**
+    *   In the Azure Portal, click the Cloud Shell icon in the top navigation bar.
+    *   If prompted, select **PowerShell** as the shell environment.
+    *   If this is the first time using Cloud Shell, create a storage account.
 
-    *   Click "+ Create a resource" in the top-left corner.
-    *   Search for "Virtual network" and select "Virtual network" (published by Microsoft).
-    *   Click "Create".
-
-4.  **Configure the VNet:** On the "Create virtual network" page:
-
-    *   **Subscription:** Choose your Azure subscription.
-    *   **Resource group:** Create a new resource group named `iatd_labs_01`.
-    *   **Name:** Enter `iatd_labs_01_vnet_portal`.
-    *   **Region:** Choose a region appropriate for you (e.g., East US).
-    *   **IP Addresses Tab**:
-        *  Click on the IP Addresses tab.
-        *  Click on the "+ Add subnet" button
-        *   **IPv4 address space:** Change to  `172.16.0.0/16`.
-        *   **Subnet name:** `iatd_labs_01_subnet_portal`.
-        *   **Subnet address range:** `172.16.0.0/24`.
-
-    *   **Security:** Leave the default security settings.
-    *   Click "Review + create".
-
-5.  **Review and Create:** Verify your settings, then click "Create."  Wait for the VNet to be deployed.
-
-6.  **Verify the VNet:**
-    Once deployed, go to the `iatd_labs_01` resource group and select the `iatd_labs_01_vnet_portal` VNet. Examine its details, specifically the address space and subnet configuration.
-
-### Task 2: Creating a VNet using Azure PowerShell
-
-1.  **Launch Cloud Shell:**
-
-    *   Click the "Cloud Shell" icon (usually at the top of the Azure Portal).
-    *   If prompted, choose "PowerShell."
-    *   First-time users may need to create a storage account for Cloud Shell.  Follow the instructions to create one.
-
-2.  **Set Variables:** Define the variables for the VNet configuration:
+2.  **Set Variables:** In Cloud Shell, define the following variables:
 
     ```powershell
-    $resourceGroupName = "iatd_labs_01"
+    $resourceGroupName = "iatd_labs_01_rg"
     $vnetName = "iatd_labs_01_vnet_ps"
-    $location = "EastUS"
+    $location = "EastUS"  # Replace with your region
     $addressPrefix = "172.16.1.0/16"
     $subnetName = "iatd_labs_01_subnet_ps"
     $subnetPrefix = "172.16.1.0/24"
     ```
 
-3.  **Create Resource Group:** (If it doesn't already exist from Task 1):
-
+3.  **Create Resource Group (if it doesn't exist):**
     ```powershell
-    New-AzResourceGroup -Name $resourceGroupName -Location $location
+    New-AzResourceGroup -Name $resourceGroupName -Location $location -ErrorAction SilentlyContinue
     ```
-
-    *Sample Output:*
+    *Example Output:*
 
     ```
-    ResourceGroupName : iatd_labs_01
+    ResourceGroupName : iatd_labs_01_rg
     Location          : eastus
     ProvisioningState : Succeeded
     Tags              :
     ```
 
-4.  **Create Subnet Configuration:**
-
+4.  **Create the Subnet Configuration:**
     ```powershell
     $subnet = New-AzVirtualNetworkSubnetConfig -Name $subnetName -AddressPrefix $subnetPrefix
     ```
-
-    *Sample Output:*
-
+    *Example Output:*
     ```
-    Name              : iatd_labs_01_subnet_ps
-    Id                : /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/iatd_labs_01/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_ps/subnets/iatd_labs_01_subnet_ps
-    AddressPrefix     : 172.16.1.0/24
+    Name             : iatd_labs_01_subnet_ps
+    Id               : /subscriptions/.../resourceGroups/iatd_labs_01_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_ps/subnets/iatd_labs_01_subnet_ps
+    AddressPrefix    : 172.16.1.0/24
     ...
     ```
-
-5.  **Create Virtual Network:**
-
+5.  **Create the Virtual Network:**
     ```powershell
     New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $resourceGroupName -Location $location -AddressPrefix $addressPrefix -Subnet $subnet
     ```
-
-    *Sample Output:*
-
+    *Example Output:*
     ```
     Name              : iatd_labs_01_vnet_ps
-    ResourceGroupName : iatd_labs_01
+    ResourceGroupName : iatd_labs_01_rg
     Location          : eastus
     ...
     AddressSpace      : {172.16.1.0/16}
     ...
+    Subnets           : [
+                         {
+                           "Name": "iatd_labs_01_subnet_ps",
+                           "Id": "/subscriptions/.../resourceGroups/iatd_labs_01_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_ps/subnets/iatd_labs_01_subnet_ps",
+                           ...
+                           "AddressPrefix": "172.16.1.0/24"
+                         }
+                       ]
     ```
 
-6.  **Verify the VNet:** Retrieve and inspect the VNet's configuration.
-
+6.  **Verify the Virtual Network:**
     ```powershell
     Get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $resourceGroupName
     ```
+    Inspect the output to confirm VNet creation with the correct settings.
 
-    Confirm the VNet parameters match the ones you defined.
+### Task 3: Creating a Virtual Network using Azure CLI
 
-### Task 3: Creating a VNet using Azure CLI
+1.  **Launch Azure Cloud Shell:** Follow the same steps as in Task 2, but choose **Bash**.
 
-1.  **Launch Cloud Shell:**
-
-    *   Click the "Cloud Shell" icon in the Azure portal toolbar.
-    *   Select "Bash" if prompted.
-    *   Set up a storage account if this is your first time using Cloud Shell.
-
-2.  **Set Variables:** Define variables for the VNet creation.
+2.  **Set Variables:** Define the following variables in Cloud Shell:
 
     ```azurecli
-    RESOURCE_GROUP="iatd_labs_01"
+    RESOURCE_GROUP="iatd_labs_01_rg"
     VNET_NAME="iatd_labs_01_vnet_cli"
-    LOCATION="eastus"
+    LOCATION="eastus" # Replace with your region
     ADDRESS_PREFIX="172.16.2.0/16"
     SUBNET_NAME="iatd_labs_01_subnet_cli"
     SUBNET_PREFIX="172.16.2.0/24"
     ```
 
-3.  **Create Resource Group:**  (If it doesn't exist yet)
-
+3.  **Create Resource Group (if it doesn't exist):**
     ```azurecli
-    az group create --name $RESOURCE_GROUP --location $LOCATION
+    az group create --name $RESOURCE_GROUP --location $LOCATION --output json --only-show-errors
     ```
-
-    *Sample Output:*
+    *Example Output:*
 
     ```json
     {
-      "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/iatd_labs_01",
+      "id": "/subscriptions/.../resourceGroups/iatd_labs_01_rg",
       "location": "eastus",
       "managedBy": null,
-      "name": "iatd_labs_01",
+      "name": "iatd_labs_01_rg",
       "properties": {
         "provisioningState": "Succeeded"
       },
@@ -177,7 +184,7 @@ Approximately 45 minutes - 1 hour.
     }
     ```
 
-4.  **Create Virtual Network:**
+4.  **Create the Virtual Network:**
 
     ```azurecli
     az network vnet create \
@@ -188,8 +195,7 @@ Approximately 45 minutes - 1 hour.
       --subnet-prefixes $SUBNET_PREFIX \
       --location $LOCATION
     ```
-
-    *Sample Output:*
+    *Example Output:*
 
     ```json
     {
@@ -200,118 +206,123 @@ Approximately 45 minutes - 1 hour.
           ]
         },
         "dhcpOptions": {
-          "dnsServers": [],
+          "dnsServers": []
         },
         "enableDdosProtection": false,
         "enableVmProtection": false,
-        "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/iatd_labs_01/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_cli",
+        "id": "/subscriptions/.../resourceGroups/iatd_labs_01_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_01_vnet_cli",
         "location": "eastus",
         "name": "iatd_labs_01_vnet_cli",
         ...
     ```
 
-5.  **Verify the VNet:**
+5.  **Verify the Virtual Network:**
 
     ```azurecli
     az network vnet show --name $VNET_NAME --resource-group $RESOURCE_GROUP
     ```
+    Review the output to verify the VNet's configuration.
 
-    Review the output to validate the VNet configuration.
+### Task 4: Creating a Virtual Network using Azure Resource Manager (ARM) Templates
 
-### Task 4: Creating a VNet using Azure Resource Manager (ARM) Templates
+1.  **Create ARM Template File:**
+    *   In Cloud Shell, use the `code` command to create a new file:
+        ```bash
+        code vnet_template.json
+        ```
+        This opens the Cloud Shell editor.
 
-1.  **Create ARM Template:**  Create a file named `vnet_template.json` directly in Cloud Shell's editor. Use the command `code vnet_template.json` to open the editor.
+    *   Paste the following JSON code into the `vnet_template.json` file:
 
-2.  **Paste the Following JSON:**
-
-    ```json
-    {
-      "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-      "contentVersion": "1.0.0.0",
-      "parameters": {
-        "vnetName": {
-          "type": "string",
-          "defaultValue": "iatd_labs_01_vnet_arm",
-          "metadata": {
-            "description": "Virtual Network Name"
-          }
-        },
-        "vnetAddressPrefix": {
-          "type": "string",
-          "defaultValue": "172.16.3.0/16",
-          "metadata": {
-            "description": "Virtual Network Address Prefix"
-          }
-        },
-        "subnetName": {
-          "type": "string",
-          "defaultValue": "iatd_labs_01_subnet_arm",
-          "metadata": {
-            "description": "Subnet Name"
-          }
-        },
-        "subnetPrefix": {
-          "type": "string",
-          "defaultValue": "172.16.3.0/24",
-          "metadata": {
-            "description": "Subnet Address Prefix"
-          }
-        },
-        "location": {
-          "type": "string",
-          "defaultValue": "eastus",
-          "metadata": {
-            "description": "Location for all resources."
-          }
-        }
-      },
-      "variables": {},
-      "resources": [
+        ```json
         {
-          "type": "Microsoft.Network/virtualNetworks",
-          "apiVersion": "2020-06-01",
-          "name": "[parameters('vnetName')]",
-          "location": "[parameters('location')]",
-          "properties": {
-            "addressSpace": {
-              "addressPrefixes": [
-                "[parameters('vnetAddressPrefix')]"
-              ]
-            },
-            "subnets": [
-              {
-                "name": "[parameters('subnetName')]",
-                "properties": {
-                  "addressPrefix": "[parameters('subnetPrefix')]"
-                }
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "vnetName": {
+              "type": "string",
+              "defaultValue": "iatd_labs_01_vnet_arm",
+              "metadata": {
+                "description": "Virtual Network Name"
               }
-            ]
-          }
+            },
+            "vnetAddressPrefix": {
+              "type": "string",
+              "defaultValue": "172.16.3.0/16",
+              "metadata": {
+                "description": "Virtual Network Address Prefix"
+              }
+            },
+            "subnetName": {
+              "type": "string",
+              "defaultValue": "iatd_labs_01_subnet_arm",
+              "metadata": {
+                "description": "Subnet Name"
+              }
+            },
+            "subnetPrefix": {
+              "type": "string",
+              "defaultValue": "172.16.3.0/24",
+              "metadata": {
+                "description": "Subnet Address Prefix"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "eastus",
+              "metadata": {
+                "description": "Location for all resources."
+              }
+            }
+          },
+          "variables": {},
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks",
+              "apiVersion": "2020-06-01",
+              "name": "[parameters('vnetName')]",
+              "location": "[parameters('location')]",
+              "properties": {
+                "addressSpace": {
+                  "addressPrefixes": [
+                    "[parameters('vnetAddressPrefix')]"
+                  ]
+                },
+                "subnets": [
+                  {
+                    "name": "[parameters('subnetName')]",
+                    "properties": {
+                      "addressPrefix": "[parameters('subnetPrefix')]"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
-      ]
-    }
-    ```
+        ```
 
-3.  **Deploy ARM Template:** Deploy the template using Azure CLI within Cloud Shell:
+    *   Save the file (Ctrl+S or Cmd+S).
+
+2.  **Deploy ARM Template:** Use the following Azure CLI command to deploy the template:
 
     ```azurecli
-    RESOURCE_GROUP="iatd_labs_01"
+    RESOURCE_GROUP="iatd_labs_01_rg"
     TEMPLATE_FILE="vnet_template.json"
 
     az deployment group create \
       --resource-group $RESOURCE_GROUP \
       --template-file $TEMPLATE_FILE
     ```
-
-    *Sample Output:*
+    *Example Output:*
 
     ```json
     {
-      "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/iatd_labs_01/providers/Microsoft.Resources/deployments/vnet_template",
+      "id": "/subscriptions/.../resourceGroups/iatd_labs_01_rg/providers/Microsoft.Resources/deployments/vnet_template",
       "location": "eastus",
       "name": "vnet_template",
       "properties": {
-        "correlationId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "correlationId": "...",
         "dependencies": [],
         "outputs": {},
         "parameters": {
@@ -337,35 +348,57 @@ Approximately 45 minutes - 1 hour.
           }
         },
         "parametersLink": null,
-        "providers": [ ... ],
+        "providers": [
+          {
+            "id": null,
+            "namespace": "Microsoft.Network",
+            "providerAuthorizationConsent": null,
+            "registrationPolicy": null,
+            "resourceTypes": [
+              {
+                "aliases": null,
+                "apiVersions": null,
+                "capabilities": null,
+                "defaultApiVersion": null,
+                "locationRequired": true,
+                "locations": null,
+                "properties": null,
+                "resourceType": "virtualNetworks",
+                "zoneMappings": null
+              }
+            ]
+          }
+        ],
         "provisioningState": "Succeeded",
-        "templateContent": { ... }
-    }
+        "templateContent": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          ...
     ```
 
-4.  **Verify the VNet:** Confirm creation and settings by using the Azure Portal, Azure PowerShell, or Azure CLI to view the deployed VNet (named `iatd_labs_01_vnet_arm`).  For example, with Azure CLI:
-
+3.  **Verify the Virtual Network:** Use the Azure Portal, Azure PowerShell, or Azure CLI to verify the VNet's creation with the settings defined in the ARM template.  For example, using Azure CLI:
     ```azurecli
     az network vnet show --name "iatd_labs_01_vnet_arm" --resource-group $RESOURCE_GROUP
     ```
 
-## Post-Lab Tasks
+## Post-Lab Tasks: Clean Up Resources
 
-1.  **Clean up Resources:** Delete the resource group `iatd_labs_01` to avoid unnecessary costs. Use one of the following methods:
+To avoid incurring costs, delete the resources created in this lab. Delete the resource group to ensure removal of all resources.
 
-    **Azure Portal:**
+1.  **Delete the Resource Group:**
 
-    *   Go to the `iatd_labs_01` resource group.
-    *   Click "Delete resource group".
-    *   Enter the resource group name to confirm and click "Delete".
+    **Using Azure Portal:**
 
-    **Azure PowerShell:**
+    *   Navigate to the `iatd_labs_01_rg` resource group.
+    *   Click "Delete resource group."
+    *   Confirm by typing the resource group name and clicking "Delete."
+
+    **Using Azure PowerShell:**
 
     ```powershell
     Remove-AzResourceGroup -Name $resourceGroupName -Force
     ```
 
-    **Azure CLI:**
+    **Using Azure CLI:**
 
     ```azurecli
     az group delete --name $RESOURCE_GROUP --yes
@@ -373,4 +406,4 @@ Approximately 45 minutes - 1 hour.
 
 ## Conclusion
 
-You have now successfully created Azure Virtual Networks using the Azure Portal, Azure PowerShell, Azure CLI, and ARM Templates. Each method provides a different balance of control and automation. Understanding when and how to leverage these tools is vital to effectively manage your Azure infrastructure. Remember to deallocate or remove resources that are no longer needed.
+You've created Azure Virtual Networks using the Azure Portal, Azure PowerShell, Azure CLI, and ARM Templates. You now understand how to provision and configure VNets. Clean up your resources after the lab to avoid costs.
