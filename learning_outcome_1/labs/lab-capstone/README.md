@@ -1,10 +1,10 @@
 # Multi-Cloud Network Infrastructure Capstone Lab
 
 ## Overview
-This capstone laboratory exercise provides hands-on experience with enterprise-grade networking across major cloud platforms: Microsoft Azure, Google Cloud Platform (GCP), and Amazon Web Services (AWS). Through structured exercises, participants will implement and configure networking components while applying industry best practices.
+In this capstone lab, you'll gain hands-on experience with enterprise-grade networking across major cloud platforms: Microsoft Azure, Google Cloud Platform (GCP), and Amazon Web Services (AWS). Through structured exercises, you'll implement and configure networking components while applying industry best practices.
 
 ## Learning Objectives
-Upon completion of this capstone lab, participants will be able to:
+After completing this capstone lab, you'll be able to:
 - Design and implement cloud-native networking solutions
 - Configure secure network architectures across multiple cloud providers
 - Apply industry-standard networking practices and security controls
@@ -12,18 +12,20 @@ Upon completion of this capstone lab, participants will be able to:
 
 ## Prerequisites
 ### Required Access
+You'll need active accounts for:
 - Microsoft Azure Subscription
 - Amazon Web Services (AWS) Account
 - Google Cloud Platform (GCP) Account
 
 ### Technical Requirements
+Before starting, ensure you have:
 - Working knowledge of cloud platform consoles
 - Basic understanding of networking concepts
 - Familiarity with cloud CLI tools
-- Completion of prerequisite networking labs
+- Completed the prerequisite networking labs
 
 ## Exercise Framework
-Exercises are structured according to complexity levels:
+The exercises are structured according to complexity levels to help you progress:
 - **Foundation Level**: Core concepts and single-cloud implementations
 - **Professional Level**: Advanced solutions and cross-cloud architectures
 
@@ -280,35 +282,35 @@ Amazon Web Services provides a robust networking framework through Amazon VPC. T
 ## Resource Management
 
 ### Cleanup Procedures
-To maintain cost efficiency, implement the following cleanup procedures after exercise completion:
+To avoid unnecessary charges, make sure you clean up your resources after completing the exercises:
 
 1. Microsoft Azure
-   - Remove resource groups
-   - Verify resource deletion
-   - Check for orphaned resources
+   - Remove your resource groups
+   - Verify your resource deletion
+   - Check for any orphaned resources
 
 2. Google Cloud Platform
-   - Delete network resources
-   - Remove firewall configurations
-   - Verify instance termination
+   - Delete your network resources
+   - Remove your firewall configurations
+   - Verify your instance termination
 
 3. Amazon Web Services
-   - Terminate compute instances
-   - Remove network components
-   - Verify elastic IP release
+   - Terminate your compute instances
+   - Remove your network components
+   - Verify your elastic IP release
 
 ## Learning Outcomes
-Upon successful completion, participants will demonstrate:
-- Proficiency in cloud network architecture
-- Understanding of security best practices
-- Ability to implement enterprise solutions
-- Expertise with cloud networking tools
+After completing these exercises, you'll have:
+- Mastered cloud network architecture principles
+- Gained practical security implementation experience
+- Developed enterprise solution deployment skills
+- Built expertise with cloud networking tools
 
 ## Professional Development
-This laboratory exercise aligns with industry-standard practices for enterprise cloud networking. Participants are encouraged to:
-- Document implementation decisions
+As you work through this lab, remember to:
+- Document your implementation decisions
 - Follow cloud provider best practices
-- Consider high availability in designs
+- Consider high availability in your designs
 - Implement security at every layer
 
-For additional guidance, consult the official documentation of each cloud provider and leverage enterprise architecture frameworks.
+For additional guidance, refer to the official documentation of each cloud provider and leverage enterprise architecture frameworks.
