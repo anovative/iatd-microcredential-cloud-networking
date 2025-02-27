@@ -400,240 +400,100 @@ To avoid IP conflicts across clouds:
 
 These exercises will help you practice basic cloud networking concepts. Take them at your own pace.
 
-#### Exercise 1: Azure Network Troubleshooting
-**Scenario:** A development team reports they cannot access the database subnet from the application subnet.
+#### Exercise 1: Basic Azure Networking
+**Challenge Level: Basic**
 
-**Hints:**
-- Use Network Watcher's IP flow verify to check connectivity
-- Review NSG flow logs for denied traffic
-- Check effective security rules for both subnets
-- Don't forget to verify route table associations
-- Use Test-NetConnection or curl to test connectivity
+**What You'll Practice:**
+- Creating a Virtual Network
+- Setting up basic subnets
+- Configuring Network Security Groups
 
 **Tasks:**
-1. Review and validate the NSG rules between subnets
-2. Check if the Private DNS zone is resolving names correctly
-3. Verify the route tables are configured properly
-4. Document your findings and solution
+1. Create a Virtual Network with two subnets:
+   - Web subnet (10.0.1.0/24)
+   - Database subnet (10.0.2.0/24)
+2. Create NSG rules to:
+   - Allow web subnet to access database subnet on port 3306
+   - Block all other traffic between subnets
+3. Test the connectivity using Network Watcher
 
-**Success Criteria:**
-- Identify the root cause of the connectivity issue
-- Implement the fix using both Portal and CLI
-- Verify connectivity between subnets
-- Create a troubleshooting runbook for future reference
+**Practice Tips:**
+- Try both Azure Portal and CLI approaches
+- Use Network Watcher to verify your rules
 
-#### Exercise 2: Multi-Region AWS Setup
-**Scenario:** Extend the AWS infrastructure to support a disaster recovery (DR) region.
+#### Exercise 2: AWS VPC Setup
+**Challenge Level: Intermediate**
 
-**Hints:**
-- Use different CIDR ranges for each region to avoid overlap
-- Consider using Transit Gateway for simplified connectivity
-- Enable route propagation where needed
-- Remember to update security groups in both regions
-- Use AWS Systems Manager for cross-region management
-
-**Tasks:**
-1. Create a new VPC in a different region
-2. Set up VPC peering between regions
-3. Configure route tables for cross-region communication
-4. Implement a basic application that spans both regions
-
-**Success Criteria:**
-- Successfully establish VPC peering
-- Demonstrate cross-region communication
-- Show failover capabilities
-- Document the DR process
-
-#### Exercise 3: GCP Network Security
-**Scenario:** Implement a secure network architecture for a three-tier application.
-
-**Hints:**
-- Use hierarchical firewall rules for better management
-- Consider using network tags for service identification
-- Implement proper egress rules for each tier
-- Use Cloud Armor preview mode before enforcement
-- Remember to enable flow logs for troubleshooting
+**What You'll Practice:**
+- Creating a VPC
+- Setting up public and private subnets
+- Basic routing configuration
 
 **Tasks:**
-1. Create separate subnets for web, app, and database tiers
-2. Configure appropriate firewall rules for each tier
-3. Set up Cloud NAT for outbound internet access
-4. Implement Cloud Armor for DDoS protection
+1. Create a VPC with:
+   - One public subnet (172.16.1.0/24)
+   - One private subnet (172.16.2.0/24)
+2. Configure route tables for both subnets
+3. Add security groups to control access
 
-**Success Criteria:**
-- Proper network segmentation
-- Secure communication between tiers
-- Working outbound internet access
-- Successfully block unauthorized access
+**Practice Tips:**
+- Use AWS Console for visual understanding
+- Try AWS CLI for automation practice
 
-#### Exercise 4: Cross-Cloud Integration
-**Scenario:** Create a hybrid application that spans all three cloud providers.
+#### Exercise 3: GCP Basic Networking
+**Challenge Level: Basic**
 
-**Hints:**
-- Use managed identities/roles where possible
-- Consider latency when designing the architecture
-- Implement retry logic for cross-cloud calls
-- Use secure methods for sharing credentials
-- Monitor costs across all cloud providers
+**What You'll Practice:**
+- Creating a VPC network
+- Configuring firewall rules
+- Setting up basic subnets
 
 **Tasks:**
-1. Set up a simple web application that:
-   - Stores data in Azure SQL Database
-   - Uses AWS S3 for file storage
-   - Utilizes GCP Cloud Functions for processing
-2. Configure cross-cloud networking
-3. Implement proper security measures
-4. Monitor cross-cloud latency
+1. Create a VPC with one subnet (192.168.1.0/24)
+2. Set up basic firewall rules to:
+   - Allow SSH access
+   - Allow HTTP/HTTPS traffic
+3. Test connectivity using ping and curl
 
-**Success Criteria:**
-- Application works across all clouds
-- Secure data transmission
-- Acceptable latency metrics
-- Working monitoring solution
+**Practice Tips:**
+- Use GCP Console for visualization
+- Practice with gcloud commands
 
-#### Exercise 5: Security Audit
-**Scenario:** Conduct a security audit of the multi-cloud infrastructure.
+### Learning Path
 
-**Hints:**
-- Use cloud-native security assessment tools
-- Compare configurations against CIS benchmarks
-- Review service endpoints and exposed ports
-- Check for unused or misconfigured resources
-- Document all security findings systematically
+1. Start with Exercise 1 (Azure) to learn basic networking concepts
+2. Move to Exercise 3 (GCP) to practice similar concepts in a different cloud
+3. Try Exercise 2 (AWS) when comfortable with the basics
 
-**Tasks:**
-1. Review and document:
-   - Network security groups
-   - Firewall rules
-   - VPN configurations
-   - Access controls
-2. Identify potential vulnerabilities
-3. Implement security best practices
-4. Create a security compliance report
+Remember:
+- Take your time with each exercise
+- It's okay to refer back to previous labs
+- Focus on understanding the concepts
 
-**Success Criteria:**
-- Complete security audit report
-- Implemented security improvements
-- Updated security documentation
-- Compliance validation
+### Resource Cleanup
 
-#### Exercise 6: Disaster Recovery Plan
-**Scenario:** Create and test a disaster recovery plan for the multi-cloud infrastructure.
+After completing your practice:
+1. Delete all Azure resources
+2. Remove AWS resources
+3. Clean up GCP resources
 
-**Hints:**
-- Document dependencies between services
-- Test DR procedures regularly
-- Automate where possible
-- Consider cost implications of different DR strategies
-- Maintain up-to-date recovery documentation
+This ensures you don't incur unnecessary charges.
 
-**Tasks:**
-1. Document critical infrastructure components
-2. Create DR procedures for each component
-3. Implement automated failover where possible
-4. Test the DR plan
+### Key Learning Outcomes
 
-**Success Criteria:**
-- Documented DR plan
-- Successful failover testing
-- Recovery time objectives (RTO) met
-- Recovery point objectives (RPO) met
+After completing this capstone lab, you will have:
+1. Practiced basic networking concepts across multiple clouds
+2. Gained hands-on experience with different cloud interfaces
+3. Learned to configure basic network security
+4. Built confidence in working with cloud networking
 
-#### Exercise 7: Cost Optimization
-**Scenario:** Optimize the cost of the multi-cloud infrastructure while maintaining performance.
+### Additional Challenges
 
-**Hints:**
-- Set up budget alerts
-- Review costs daily during implementation
-- Use cost calculators before deployment
-- Clean up unused resources promptly
-
-**Tasks:**
-1. Review current resource usage
-2. Identify cost optimization opportunities
-3. Implement automated scaling
-4. Create cost allocation tags
-
-**Success Criteria:**
-- Reduced infrastructure costs
-- Maintained performance levels
-- Working auto-scaling
-- Clear cost allocation
-
-#### Exercise 8: Infrastructure as Code Challenge
-**Scenario:** Convert the manual infrastructure setup to Infrastructure as Code (IaC).
-
-**Hints:**
-- Start with simpler resources and build up
-- Use variables for reusable values
-- Implement proper state management
-- Consider using modules for common patterns
-- Test deployments in a separate environment
-
-**Tasks:**
-1. Create templates for:
-   - Azure ARM templates
-   - AWS CloudFormation
-   - GCP Deployment Manager
-2. Implement proper variable management
-3. Set up CI/CD pipeline for infrastructure
-4. Create testing procedures
-
-**Success Criteria:**
-- Working IaC templates
-- Successful automated deployment
-- Proper version control
-- Documentation for future updates
-
-#### Exercise 9: Performance Tuning
-**Scenario:** Optimize network performance across the multi-cloud infrastructure.
-
-**Hints:**
-- Use appropriate VM sizes for network performance
-- Consider using accelerated networking where available
-- Monitor bandwidth usage and latency
-- Use content delivery networks where appropriate
-- Test from different regions to establish baseline
-
-**Tasks:**
-1. Baseline current performance
-2. Identify bottlenecks
-3. Implement performance improvements
-4. Document optimization process
-
-**Success Criteria:**
-- Improved network performance
-- Reduced latency
-- Optimized routing
-- Performance monitoring dashboard
-
-#### Exercise 10: Network Monitoring Challenge
-**Scenario:** Implement comprehensive monitoring for the multi-cloud infrastructure.
-
-**Hints:**
-- Use log analytics for centralized monitoring
-- Set up meaningful alert thresholds
-- Consider using SIEM solutions for correlation
-- Create runbooks for common security events
-- Test alert notifications end-to-end
-
-**Tasks:**
-1. Set up monitoring in each cloud:
-   - Azure Network Watcher
-   - AWS CloudWatch
-   - GCP Network Intelligence Center
-2. Create a consolidated dashboard
-3. Configure alerts for:
-   - High latency
-   - Failed connections
-   - Security violations
-   - Cost thresholds
-
-**Success Criteria:**
-- Working monitoring dashboard
-- Proper alert configuration
-- Incident response documentation
-- Cost optimization recommendations
+1. Implement load balancing across clouds
+2. Set up cross-cloud monitoring
+3. Create automated deployment scripts
+4. Implement disaster recovery scenarios
+5. Add container networking components
 
 ### Resource Cleanup
 
