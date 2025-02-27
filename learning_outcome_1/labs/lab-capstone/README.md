@@ -151,341 +151,178 @@ To avoid IP conflicts across clouds:
 - Documented DNS hierarchy
 - Successful resolution testing
 
-### Part 2: AWS Network Infrastructure
-
-**What you'll learn:**
-- VPC design principles and implementation
-- Public and private subnet configuration
-- Internet and NAT Gateway setup
-- Using both AWS Console and CLI for network setup
-
-1. **Create VPC and Subnets (AWS Console):**
-   * Navigate to AWS Console → VPC Dashboard
-   * Click "Create VPC"
-   * Choose "VPC and More" option
-   * Configure:
-     - Name tag: `iatd_capstone_vpc_aws`
-     - IPv4 CIDR: 172.16.0.0/16
-     - Number of AZs: 2
-     - Public subnets: Yes
-     - Private subnets: Yes
-     - NAT gateways: 1 per AZ
-     - VPC endpoints: S3 Gateway
-
-2. **Configure Route Tables (AWS CLI):**
-   ```bash
-   # Create and configure route table for private subnet
-   route_table_id=$(aws ec2 create-route-table \
-     --vpc-id $vpc_id \
-     --tag-specifications 'ResourceType=route-table,Tags=[{Key=Name,Value=iatd_capstone_rt_private}]' \
-     --query 'RouteTable.RouteTableId' \
-     --output text)
-
-   # Add route through NAT Gateway
-   aws ec2 create-route \
-     --route-table-id $route_table_id \
-     --destination-cidr-block 0.0.0.0/0 \
-     --nat-gateway-id $nat_gateway_id
-   ```
-
-#### Part 2 Exercises: AWS Network Implementation
-
-**Exercise 2.1: Multi-Region AWS Setup**
-**Scenario:** Extend the AWS infrastructure to support a disaster recovery (DR) region.
-
-**Hints:**
-- Use different CIDR ranges for each region to avoid overlap
-- Consider using Transit Gateway for simplified connectivity
-- Enable route propagation where needed
-- Remember to update security groups in both regions
-- Use AWS Systems Manager for cross-region management
-
-**Tasks:**
-1. Create a new VPC in a different region
-2. Set up VPC peering between regions
-3. Configure route tables for cross-region communication
-4. Implement a basic application that spans both regions
-
-**Success Criteria:**
-- Successfully establish VPC peering
-- Demonstrate cross-region communication
-- Show failover capabilities
-- Document the DR process
-
-**Exercise 2.2: VPC Endpoint Configuration**
-**Scenario:** Implement private access to AWS services using VPC endpoints.
-
-**Hints:**
-- Start with Gateway endpoints (S3, DynamoDB) as they're free
-- Use Interface endpoints for other AWS services
-- Remember to update route tables for Gateway endpoints
-- Check DNS settings when using Interface endpoints
-- Review endpoint policies to ensure least privilege
-
-**Tasks:**
-1. Create VPC endpoints for essential AWS services (S3, DynamoDB)
-2. Configure endpoint policies
-3. Update route tables for endpoint access
-4. Test access to services through endpoints
-
-**Success Criteria:**
-- Working VPC endpoints
-- Secure service access
-- Proper route configuration
-- Successful access testing
-
-### Part 3: GCP Network Infrastructure
-
-**What you'll learn:**
-- GCP VPC architecture and design
-- Subnet creation and management
-- Cloud Router and NAT configuration
-- Using both GCP Console and gcloud CLI
-
-1. **Create VPC Network (GCP Console):**
-   * Navigate to GCP Console → VPC Networks
-   * Click "Create VPC Network"
-   * Configure:
-     - Name: `iatd_capstone_vpc_gcp`
-     - Subnet creation mode: Custom
-     - New subnet:
-       * Name: `iatd_capstone_subnet_gcp_public`
-       * Region: us-central1
-       * IP range: 192.168.1.0/24
-     - Add another subnet:
-       * Name: `iatd_capstone_subnet_gcp_private`
-       * Region: us-central1
-       * IP range: 192.168.2.0/24
-
-2. **Configure Cloud Router and NAT (gcloud CLI):**
-   ```bash
-   # Create Cloud Router
-   gcloud compute routers create iatd_capstone_router_gcp \
-     --network=iatd_capstone_vpc_gcp \
-     --region=us-central1
-
-   # Configure Cloud NAT
-   gcloud compute routers nats create iatd_capstone_nat_gcp \
-     --router=iatd_capstone_router_gcp \
-     --router-region=us-central1 \
-     --nat-all-subnet-ip-ranges \
-     --auto-allocate-nat-external-ips
-   ```
-
-#### Part 3 Exercises: GCP Network Security
-
-**Exercise 3.1: Network Security Implementation**
-**Scenario:** Implement a secure network architecture for a three-tier application.
-
-**Hints:**
-- Use hierarchical firewall rules for better management
-- Consider using network tags for service identification
-- Implement proper egress rules for each tier
-- Use Cloud Armor preview mode before enforcement
-- Remember to enable flow logs for troubleshooting
-
-**Tasks:**
-1. Create separate subnets for web, app, and database tiers
-2. Configure appropriate firewall rules for each tier
-3. Set up Cloud NAT for outbound internet access
-4. Implement Cloud Armor for DDoS protection
-
-**Success Criteria:**
-- Proper network segmentation
-- Secure communication between tiers
-- Working outbound internet access
-- Successfully block unauthorized access
-
-**Exercise 3.2: VPC Service Controls**
-**Scenario:** Implement VPC Service Controls to secure cloud resources.
-
-**Hints:**
-- Start with a dry-run perimeter to assess impact
-- Use access levels to define trusted identities
-- Consider using bridge perimeters for shared services
-- Test thoroughly before enforcing policies
-- Monitor VPC Service Controls logs for issues
-
-**Tasks:**
-1. Create a service perimeter
-2. Configure access levels
-3. Define resource policies
-4. Test service isolation
-
-**Success Criteria:**
-- Working service perimeter
-- Proper access controls
-- Resource protection
-- Successful isolation testing
-
-### Part 4: Cross-Cloud Connectivity
-
-**What you'll learn:**
-- Setting up secure cross-cloud communication
-- VPN Gateway configuration
-- Transit Gateway implementation
-- Understanding hybrid cloud networking
-
-1. **Azure VPN Gateway Setup (Mixed Approach):**
-   * Using Azure Portal:
-     - Navigate to Virtual Network Gateway
-     - Click "Create"
-     - Configure:
-       * Name: `iatd_capstone_vpn_azure`
-       * Gateway type: VPN
-       * SKU: VpnGw1
-       * Virtual network: iatd_capstone_vnet_azure
-       * Public IP: Create new
-
-   * Using Azure CLI for connection:
-   ```powershell
-   # Create Local Network Gateway
-   az network local-gateway create \
-     --resource-group iatd_capstone_rg \
-     --name "AWS-Connection" \
-     --gateway-ip-address $aws_vpn_public_ip \
-     --local-address-prefixes 172.16.0.0/16
-   ```
-
-#### Part 4 Exercises: Multi-Cloud Integration
-
-**Exercise 4.1: Cross-Cloud Application**
-**Scenario:** Create a hybrid application that spans all three cloud providers.
-
-**Hints:**
-- Use managed identities/roles where possible
-- Consider latency when designing the architecture
-- Implement retry logic for cross-cloud calls
-- Use secure methods for sharing credentials
-- Monitor costs across all cloud providers
-
-**Tasks:**
-1. Set up a simple web application that:
-   - Stores data in Azure SQL Database
-   - Uses AWS S3 for file storage
-   - Utilizes GCP Cloud Functions for processing
-2. Configure cross-cloud networking
-3. Implement proper security measures
-4. Monitor cross-cloud latency
-
-**Success Criteria:**
-- Application works across all clouds
-- Secure data transmission
-- Acceptable latency metrics
-- Working monitoring solution
-
-**Exercise 4.2: Network Performance Optimization**
-**Scenario:** Optimize network performance across the multi-cloud infrastructure.
-
-**Hints:**
-- Use appropriate VM sizes for network performance
-- Consider using accelerated networking where available
-- Monitor bandwidth usage and latency
-- Use content delivery networks where appropriate
-- Test from different regions to establish baseline
-
-**Tasks:**
-1. Baseline current performance
-2. Identify bottlenecks
-3. Implement performance improvements
-4. Document optimization process
-
-**Success Criteria:**
-- Improved network performance
-- Reduced latency
-- Optimized routing
-- Performance monitoring dashboard
-
 ### Practice Exercises
 
-These exercises will help you practice basic cloud networking concepts. Take them at your own pace.
+These exercises are designed to help you practice cloud networking concepts at your own pace. Each exercise builds upon skills from previous labs.
 
-#### Exercise 1: Basic Azure Networking
-**Challenge Level: Basic**
+#### Exercise 1: Azure Virtual Network Basics
+ **Challenge Level: Basic**
 
-**What You'll Practice:**
-- Creating a Virtual Network
-- Setting up basic subnets
-- Configuring Network Security Groups
-
-**Tasks:**
-1. Create a Virtual Network with two subnets:
-   - Web subnet (10.0.1.0/24)
-   - Database subnet (10.0.2.0/24)
-2. Create NSG rules to:
-   - Allow web subnet to access database subnet on port 3306
-   - Block all other traffic between subnets
-3. Test the connectivity using Network Watcher
-
-**Practice Tips:**
-- Try both Azure Portal and CLI approaches
-- Use Network Watcher to verify your rules
-
-#### Exercise 2: AWS VPC Setup
-**Challenge Level: Intermediate**
+**Related Labs:** 
+- Lab-001: Virtual Network Creation
+- Lab-002: Network Security Groups
 
 **What You'll Practice:**
-- Creating a VPC
-- Setting up public and private subnets
-- Basic routing configuration
+- Creating and configuring a Virtual Network
+- Understanding subnet design
+- Implementing basic network security
 
-**Tasks:**
-1. Create a VPC with:
-   - One public subnet (172.16.1.0/24)
-   - One private subnet (172.16.2.0/24)
-2. Configure route tables for both subnets
-3. Add security groups to control access
+**Step-by-Step Tasks:**
+1. Create a Virtual Network:
+   - Name: `practice-vnet`
+   - Address space: `10.0.0.0/16`
+   - Region: Your choice
 
-**Practice Tips:**
-- Use AWS Console for visual understanding
-- Try AWS CLI for automation practice
+2. Create two subnets:
+   - Web subnet: `10.0.1.0/24`
+   - Database subnet: `10.0.2.0/24`
 
-#### Exercise 3: GCP Basic Networking
-**Challenge Level: Basic**
+3. Set up Network Security:
+   - Create NSG for web subnet
+   - Create NSG for database subnet
+   - Allow web → database on port 3306
+   - Block other subnet traffic
+
+4. Verify Your Setup:
+   - Use Network Watcher
+   - Check effective security rules
+   - Test connectivity between subnets
+
+**Helpful Tips:**
+- Start with Azure Portal for visual learning
+- Try repeating the tasks using Azure CLI
+- Use Network Watcher to understand traffic flow
+- Don't worry about making mistakes - this is for practice!
+
+#### Exercise 2: GCP Network Foundation
+ **Challenge Level: Basic**
+
+**Related Labs:**
+- Lab-004: Network Security
+- Lab-006: Application Gateway
 
 **What You'll Practice:**
 - Creating a VPC network
-- Configuring firewall rules
-- Setting up basic subnets
+- Understanding GCP's networking model
+- Basic firewall configuration
 
-**Tasks:**
-1. Create a VPC with one subnet (192.168.1.0/24)
-2. Set up basic firewall rules to:
-   - Allow SSH access
-   - Allow HTTP/HTTPS traffic
-3. Test connectivity using ping and curl
+**Step-by-Step Tasks:**
+1. Create a VPC:
+   - Name: `practice-vpc`
+   - Subnet mode: Custom
+   - Region: Your choice
 
-**Practice Tips:**
-- Use GCP Console for visualization
+2. Create a subnet:
+   - Name: `practice-subnet`
+   - IP range: `192.168.1.0/24`
+   - Private Google access: Enabled
+
+3. Configure Firewall Rules:
+   - Allow SSH (port 22)
+   - Allow HTTP (port 80)
+   - Allow HTTPS (port 443)
+   - Set appropriate priority numbers
+
+4. Verify Your Setup:
+   - Check subnet configuration
+   - Verify firewall rules
+   - Use Cloud Shell to test connectivity
+
+**Helpful Tips:**
+- Use GCP Console to visualize the network
 - Practice with gcloud commands
+- Pay attention to firewall rule priorities
+- Take screenshots of your configurations
+
+#### Exercise 3: AWS VPC Design
+ **Challenge Level: Intermediate**
+
+**What You'll Practice:**
+- VPC architecture
+- Public/Private subnet design
+- Route table configuration
+
+**Step-by-Step Tasks:**
+1. Create a VPC:
+   - Name: `practice-vpc`
+   - CIDR: `172.16.0.0/16`
+   - Enable DNS hostnames
+
+2. Create Subnets:
+   - Public subnet: `172.16.1.0/24`
+     * Enable auto-assign public IP
+   - Private subnet: `172.16.2.0/24`
+     * Disable auto-assign public IP
+
+3. Configure Routing:
+   - Create an Internet Gateway
+   - Create route tables for each subnet
+   - Add appropriate routes
+
+4. Set Up Security:
+   - Create security groups
+   - Configure basic inbound/outbound rules
+   - Test connectivity
+
+**Helpful Tips:**
+- Draw your network design first
+- Use AWS VPC Wizard for guidance
+- Test connectivity after each step
+- Document your configuration choices
 
 ### Learning Path
 
-1. Start with Exercise 1 (Azure) to learn basic networking concepts
-2. Move to Exercise 3 (GCP) to practice similar concepts in a different cloud
-3. Try Exercise 2 (AWS) when comfortable with the basics
+Follow this sequence for the best learning experience:
 
-Remember:
-- Take your time with each exercise
-- It's okay to refer back to previous labs
-- Focus on understanding the concepts
+1. Start with Azure (Exercise 1):
+   - Familiar Azure Portal interface
+   - Clear visualization of networking concepts
+   - Easy-to-use troubleshooting tools
+
+2. Move to GCP (Exercise 2):
+   - Similar concepts, different implementation
+   - Simpler firewall rule structure
+   - Good transition step
+
+3. Finish with AWS (Exercise 3):
+   - More complex networking model
+   - Builds on previous learning
+   - Great for understanding differences
+
+**Key Tips for Success:**
+- Take breaks between exercises
+- Review related labs if needed
+- Document what you learn
+- Don't rush - focus on understanding
 
 ### Resource Cleanup
 
-After completing your practice:
-1. Delete all Azure resources
-2. Remove AWS resources
-3. Clean up GCP resources
+ Important: Clean up resources after practice to avoid charges!
 
-This ensures you don't incur unnecessary charges.
+1. Azure Cleanup:
+   - Delete the practice-vnet resource group
+   - Verify all resources are removed
+   - Check Azure Portal for any remaining items
+
+2. GCP Cleanup:
+   - Delete the practice-vpc network
+   - Remove all firewall rules
+   - Verify in GCP Console
+
+3. AWS Cleanup:
+   - Delete the practice-vpc
+   - Remove security groups
+   - Check AWS Console for complete cleanup
 
 ### Key Learning Outcomes
 
-After completing this capstone lab, you will have:
-1. Practiced basic networking concepts across multiple clouds
-2. Gained hands-on experience with different cloud interfaces
-3. Learned to configure basic network security
-4. Built confidence in working with cloud networking
+After completing these exercises, you will:
+1. Understand basic networking in three major clouds
+2. Know how to create and secure network resources
+3. Appreciate the differences between cloud providers
+4. Have hands-on experience with cloud networking tools
+
+Remember: These are practice exercises - feel free to experiment and learn from any mistakes!
 
 ### Additional Challenges
 
