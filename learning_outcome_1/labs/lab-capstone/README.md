@@ -1,169 +1,186 @@
-## IATD Microcredential Cloud Networking: Capstone Lab - Multi-Cloud Network Infrastructure
+# Multi-Cloud Network Infrastructure Capstone Lab
 
-**Objective:** In this comprehensive capstone lab, you will practice and reinforce your multi-cloud networking skills by implementing infrastructure spanning Azure, AWS, and GCP. This hands-on lab will help you apply concepts learned from previous labs in a practical, real-world scenario.
+## Overview
+This capstone laboratory exercise provides hands-on experience with enterprise-grade networking across major cloud platforms: Microsoft Azure, Google Cloud Platform (GCP), and Amazon Web Services (AWS). Through structured exercises, participants will implement and configure networking components while applying industry best practices.
 
-**Estimated Time:** 120-180 minutes
+## Learning Objectives
+Upon completion of this capstone lab, participants will be able to:
+- Design and implement cloud-native networking solutions
+- Configure secure network architectures across multiple cloud providers
+- Apply industry-standard networking practices and security controls
+- Demonstrate proficiency with cloud networking tools and services
 
-### Prerequisites
-Before starting this lab, ensure you have:
-1. Active subscriptions for:
-   - Microsoft Azure
-   - Amazon Web Services (AWS)
-   - Google Cloud Platform (GCP)
-2. Basic familiarity with cloud consoles and CLIs
-3. Completion of previous networking labs (recommended)
+## Prerequisites
+### Required Access
+- Microsoft Azure Subscription
+- Amazon Web Services (AWS) Account
+- Google Cloud Platform (GCP) Account
 
-### Challenge Level System
-Each exercise is categorized by difficulty to help you progress systematically:
-- **Basic**: Fundamental concepts and single-cloud implementations
-- **Intermediate**: Multi-component solutions and cross-cloud basics
+### Technical Requirements
+- Working knowledge of cloud platform consoles
+- Basic understanding of networking concepts
+- Familiarity with cloud CLI tools
+- Completion of prerequisite networking labs
 
-### Practice Exercises
+## Exercise Framework
+Exercises are structured according to complexity levels:
+- **Foundation Level**: Core concepts and single-cloud implementations
+- **Professional Level**: Advanced solutions and cross-cloud architectures
 
-These exercises are designed to help you practice cloud networking concepts at your own pace. Each exercise builds upon skills from previous labs.
+## Laboratory Exercises
 
-#### Exercise 1: Azure Virtual Network Basics
-**Challenge Level: Basic**
+### Exercise 1: Enterprise Network Design in Azure
+**Foundation Level**
 
-**Related Labs:** 
+**Prerequisites:** 
 - Lab-001: Virtual Network Creation
 - Lab-002: Network Security Groups
 
-**What You'll Practice:**
-- Creating and configuring a Virtual Network
-- Understanding subnet design
-- Implementing basic network security
+**Learning Objectives:**
+- Implement enterprise-grade virtual networks
+- Configure network segmentation
+- Deploy security controls
 
-**Step-by-Step Tasks:**
-1. Create a Virtual Network:
-   - Name: `practice-vnet`
-   - Address space: `10.0.0.0/16`
-   - Region: Your choice
+**Implementation Steps:**
+1. Virtual Network Configuration
+   - Network Name: `practice-vnet`
+   - Address Space: `10.0.0.0/16`
+   - Region: Select based on latency requirements
 
-2. Create two subnets:
-   - Web subnet: `10.0.1.0/24`
-   - Database subnet: `10.0.2.0/24`
+2. Network Segmentation
+   - Web Tier: `10.0.1.0/24`
+   - Database Tier: `10.0.2.0/24`
 
-3. Set up Network Security:
-   - Create NSG for web subnet
-   - Create NSG for database subnet
-   - Allow web → database on port 3306
-   - Block other subnet traffic
+3. Security Implementation
+   - Configure Network Security Groups (NSGs)
+   - Implement tier-based access controls
+   - Enable database connectivity (port 3306)
+   - Apply security best practices
 
-4. Verify Your Setup:
-   - Use Network Watcher
-   - Check effective security rules
-   - Test connectivity between subnets
+4. Validation Procedures
+   - Utilize Network Watcher
+   - Validate security rules
+   - Perform connectivity testing
 
-**Helpful Tips:**
-- Start with Azure Portal for visual learning
-- Try repeating the tasks using Azure CLI
-- Use Network Watcher to understand traffic flow
-- Don't worry about making mistakes - this is for practice!
+**Technical Guidance:**
+- Leverage Azure Portal for initial configuration
+- Implement infrastructure as code using Azure CLI
+- Utilize Network Watcher for troubleshooting
+- Document configuration changes
 
-#### Exercise 2: GCP Network Foundation
-**Challenge Level: Basic**
+### Exercise 2: GCP Network Architecture
+**Foundation Level**
 
-**Related Labs:**
+**Prerequisites:**
 - Lab-004: Network Security
 - Lab-006: Application Gateway
 
-**What You'll Practice:**
-- Creating a VPC network
-- Understanding GCP's networking model
-- Basic firewall configuration
+**Learning Objectives:**
+- Design VPC networks
+- Implement GCP networking model
+- Configure enterprise security controls
 
-**Step-by-Step Tasks:**
-1. Create a VPC:
-   - Name: `practice-vpc`
-   - Subnet mode: Custom
-   - Region: Your choice
+**Implementation Steps:**
+1. VPC Configuration
+   - Network Name: `practice-vpc`
+   - Network Type: Custom Mode
+   - Region: Based on compliance requirements
 
-2. Create a subnet:
-   - Name: `practice-subnet`
-   - IP range: `192.168.1.0/24`
-   - Private Google access: Enabled
+2. Subnet Architecture
+   - Subnet Name: `practice-subnet`
+   - CIDR Range: `192.168.1.0/24`
+   - Private Google Access: Enabled
 
-3. Configure Firewall Rules:
-   - Allow SSH (port 22)
-   - Allow HTTP (port 80)
-   - Allow HTTPS (port 443)
-   - Set appropriate priority numbers
+3. Security Controls
+   - Implement firewall rules:
+     * SSH (TCP 22)
+     * HTTP (TCP 80)
+     * HTTPS (TCP 443)
+   - Configure rule priorities
 
-4. Verify Your Setup:
-   - Check subnet configuration
-   - Verify firewall rules
-   - Use Cloud Shell to test connectivity
+4. Architecture Validation
+   - Verify subnet deployment
+   - Validate firewall configurations
+   - Test network connectivity
 
-**Helpful Tips:**
-- Use GCP Console to visualize the network
-- Practice with gcloud commands
-- Pay attention to firewall rule priorities
-- Take screenshots of your configurations
+**Technical Guidance:**
+- Utilize GCP Console for visual configuration
+- Implement using gcloud CLI for automation
+- Follow security best practices
+- Maintain configuration documentation
 
-#### Exercise 3: AWS VPC Design
-**Challenge Level: Intermediate**
+### Exercise 3: AWS Enterprise Network Design
+**Professional Level**
 
-**Related Labs:**
+**Prerequisites:**
 - Lab-003: VPC Configuration
 - Lab-005: Network Access Control
 
-**What You'll Practice:**
-- VPC creation and configuration
-- Public and private subnet design
-- Route table management
-- Security group implementation
+**Learning Objectives:**
+- Design enterprise VPC architecture
+- Implement multi-tier network segmentation
+- Deploy AWS security controls
 
-**Step-by-Step Tasks:**
-1. Create a VPC:
-   - Name: `practice-vpc`
-   - CIDR block: `172.16.0.0/16`
-   - Enable DNS hostnames
+**Implementation Steps:**
+1. VPC Architecture
+   - VPC Name: `practice-vpc`
+   - CIDR Block: `172.16.0.0/16`
+   - Enable DNS Resolution
 
-2. Create Subnets:
-   - Public subnet: `172.16.1.0/24`
-   - Private subnet: `172.16.2.0/24`
-   - Choose different AZs for each
+2. Network Segmentation
+   - Public Tier: `172.16.1.0/24`
+   - Private Tier: `172.16.2.0/24`
+   - Multi-AZ Distribution
 
-3. Configure Internet Access:
-   - Create Internet Gateway
-   - Create NAT Gateway
-   - Configure route tables
-   - Associate subnets
+3. Connectivity Configuration
+   - Deploy Internet Gateway
+   - Configure NAT Gateway
+   - Implement route tables
+   - Associate network tiers
 
-4. Implement Security:
-   - Create security groups
-   - Configure NACLs
-   - Test connectivity
+4. Security Implementation
+   - Configure security groups
+   - Implement NACLs
+   - Validate network isolation
 
-**Helpful Tips:**
-- Use the VPC Wizard for initial setup
-- Remember to enable auto-assign public IPs for public subnet
-- Test connectivity using EC2 instances
-- Clean up resources when done to avoid charges
+**Technical Guidance:**
+- Utilize VPC Wizard for initial architecture
+- Enable high availability features
+- Implement proper security controls
+- Monitor resource utilization
 
-### Cleanup Instructions
-After completing the exercises, remember to delete all created resources to avoid unnecessary charges:
+## Resource Management
 
-1. Azure:
-   - Delete resource groups
-   - Verify no orphaned resources
+### Cleanup Procedures
+To maintain cost efficiency, implement the following cleanup procedures after exercise completion:
 
-2. GCP:
-   - Delete VPC networks
-   - Remove firewall rules
-   - Check for running instances
+1. Microsoft Azure
+   - Remove resource groups
+   - Verify resource deletion
+   - Check for orphaned resources
 
-3. AWS:
-   - Terminate EC2 instances
-   - Delete VPC and associated resources
-   - Check for elastic IPs
+2. Google Cloud Platform
+   - Delete network resources
+   - Remove firewall configurations
+   - Verify instance termination
 
-### Learning Outcomes
-After completing these exercises, you will:
-- Understand basic networking concepts in Azure, GCP, and AWS
-- Be able to create and configure network resources
-- Know how to implement basic network security
-- Have hands-on experience with cloud networking tools
+3. Amazon Web Services
+   - Terminate compute instances
+   - Remove network components
+   - Verify elastic IP release
 
-Remember, these are practice exercises - feel free to experiment and learn from any mistakes. If you get stuck, refer back to the previous labs or consult the cloud provider's documentation.
+## Learning Outcomes
+Upon successful completion, participants will demonstrate:
+- Proficiency in cloud network architecture
+- Understanding of security best practices
+- Ability to implement enterprise solutions
+- Expertise with cloud networking tools
+
+## Professional Development
+This laboratory exercise aligns with industry-standard practices for enterprise cloud networking. Participants are encouraged to:
+- Document implementation decisions
+- Follow cloud provider best practices
+- Consider high availability in designs
+- Implement security at every layer
+
+For additional guidance, consult the official documentation of each cloud provider and leverage enterprise architecture frameworks.
