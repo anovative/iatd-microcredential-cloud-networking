@@ -9,7 +9,7 @@ Learning Outcome 1 focuses on teaching essential skills for designing and implem
 
 ## Prerequisites
 
-Before starting these labs, you should have:
+Before starting these labs, you should have: 
 
 1. An active Azure subscription
 2. Basic understanding of networking concepts
@@ -68,6 +68,10 @@ These labs provide a comprehensive foundation in Azure networking:
 ### [Lab 9: Implementing Private DNS Zones in Azure](/learning_outcome_1/labs/lab-009)
 **Objective:** In this lab, you will learn how to create a private DNS zone in Azure, link it to a virtual network, add DNS records, and verify name resolution from a virtual machine within the network.  
 **Estimated Time:** 45-60 minutes
+
+### [Capstone Lab: Multi-Cloud Networking Practice](/learning_outcome_1/labs/lab-capstone)
+**Objective:** This capstone lab provides hands-on practice with multi-cloud networking concepts across Azure, AWS, and GCP. Through simple, guided exercises, you'll reinforce your understanding of basic networking concepts in each cloud platform.  
+**Estimated Time:** 120-180 minutes
 
 ### Supplementary Labs (AWS & GCP)
 
