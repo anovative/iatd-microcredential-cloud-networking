@@ -1,5 +1,3 @@
-Okay, let's craft that Lab Guide on examining Azure System Routes, aiming for that sweet spot balance between Azure Portal and PowerShell/CLI:
-
 ## IATD Microcredential Cloud Networking: Lab 2 - Examining Azure System Routes
 
 **Objective:** Explore the system routes automatically configured in an Azure virtual network.
