@@ -1,5 +1,3 @@
-Okay, here is the improved version of the lab guide, focusing on UDRs and traffic inspection:
-
 ## IATD Microcredential Cloud Networking: Lab 1 - Implementing User-Defined Routes for Traffic Inspection
 
 **Objective:** Configure a User-Defined Route (UDR) to route traffic from a subnet to a Network Virtual Appliance (NVA) for inspection.
