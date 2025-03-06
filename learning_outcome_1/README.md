@@ -77,11 +77,15 @@ These labs provide a comprehensive foundation in Azure networking:
 
 These supplementary labs extend your networking knowledge to other major cloud platforms:
 
-### [AWS VPC Fundamentals](/learning_outcome_1/labs/sup-aws/README.md)
+### AWS Supplementary Labs
+
+#### [Lab 1: VPC Fundamentals](/learning_outcome_1/labs/sup-aws/lab-001)
 **Objective:** This lab guides you through creating and configuring Amazon Virtual Private Cloud (VPC), implementing public and private subnets, configuring Internet and NAT Gateways, setting up security groups and routing, and launching EC2 instances in different subnet tiers.  
 **Estimated Time:** 2-3 hours
 
-### [GCP VPC Fundamentals](/learning_outcome_1/labs/sup-gcp/README.md)
+### GCP Supplementary Labs
+
+#### [Lab 1: VPC Fundamentals](/learning_outcome_1/labs/sup-gcp/lab-001)
 **Objective:** This lab guides you through creating and configuring Google Cloud VPC Network, implementing subnet architecture, configuring firewall rules and Cloud NAT, deploying VM instances with different network access levels, and testing connectivity and routing.  
 **Estimated Time:** 2-3 hours
 
