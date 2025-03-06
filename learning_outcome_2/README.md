@@ -78,6 +78,22 @@ These labs provide comprehensive coverage of Azure routing concepts and implemen
 **Objective:** Deploy a Network Virtual Appliance (NVA) to optimize traffic between subnets. You'll configure traffic routing through the NVA, enable IP forwarding, and understand NVA-based network optimization scenarios.  
 **Estimated Time:** 60-90 minutes
 
+### Supplementary Labs (AWS and GCP)
+
+These supplementary labs extend your learning to other major cloud providers, demonstrating similar routing and traffic optimization concepts in AWS and GCP environments:
+
+### AWS Supplementary Labs
+
+#### [Lab 1: Transit Gateway and Advanced Routing](/learning_outcome_2/labs/sup-aws/lab-001)
+**Objective:** Implement advanced routing configurations in AWS using Transit Gateway. You'll learn to connect multiple VPCs, configure route tables, and optimize traffic flow using AWS-native networking services.  
+**Estimated Time:** 90-120 minutes
+
+### GCP Supplementary Labs
+
+#### [Lab 1: VPC Network Peering and Cloud Router](/learning_outcome_2/labs/sup-gcp/lab-001)
+**Objective:** Configure VPC Network Peering and Cloud Router in Google Cloud Platform. You'll implement dynamic routing between VPC networks and optimize traffic flow using GCP's networking features.  
+**Estimated Time:** 90-120 minutes
+
 ## Resource Naming Conventions
 
 Throughout these labs, resources follow a consistent naming convention using the IP range 172.16.0.0/16:
@@ -174,6 +190,21 @@ If you encounter routing or connectivity issues during the labs:
 ### Network Virtual Appliances
 - [Network Virtual Appliances Overview](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#user-defined)
 - [NVA High Availability](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha)
+- [NVA Performance Considerations](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha#nva-performance-considerations)
+
+### AWS Networking Resources
+- [AWS Transit Gateway Documentation](https://docs.aws.amazon.com/vpc/latest/tgw/)
+- [VPC Peering in AWS](https://docs.aws.amazon.com/vpc/latest/peering/)
+- [AWS Route Tables and Routes](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)
+- [AWS Network ACLs](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html)
+- [AWS VPC Connectivity Options](https://docs.aws.amazon.com/whitepapers/latest/aws-vpc-connectivity-options/)
+
+### GCP Networking Resources
+- [GCP VPC Network Overview](https://cloud.google.com/vpc/docs/vpc)
+- [Cloud Router Documentation](https://cloud.google.com/network-connectivity/docs/router)
+- [VPC Network Peering](https://cloud.google.com/vpc/docs/vpc-peering)
+- [GCP Routes Overview](https://cloud.google.com/vpc/docs/routes)
+- [Traffic Director and Load Balancing](https://cloud.google.com/traffic-director/docs)mz/nva-ha)
 - [NVA Performance Optimization](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/network-virtual-appliances)
 - [IP Forwarding Configuration](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#ip-forwarding)
 
