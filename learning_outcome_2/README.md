@@ -6,11 +6,16 @@ This directory contains hands-on lab exercises for Learning Outcome 2 of the IAT
 ## Learning Outcome Overview
 
 Learning Outcome 2 focuses on mastering Azure routing concepts and implementations. Through these labs, you will gain hands-on experience with:
-- Configuring User-Defined Routes (UDRs)
-- Understanding Azure system routes and their behavior
-- Implementing Network Virtual Appliances (NVAs) for traffic inspection
+- Configuring User-Defined Routes (UDRs) and understanding their behavior
+- Understanding Azure system routes and route prioritization
+- Implementing Network Virtual Appliances (NVAs) for traffic inspection and optimization
 - Managing traffic flow using different next hop types
 - Associating and verifying route tables with subnets
+- Configuring and managing Virtual Network peering
+- Understanding route propagation across peered networks
+- Implementing cross-region routing solutions
+- Optimizing network traffic using NVAs
+- Handling overlapping routes and route precedence
 
 ## Prerequisites
 
@@ -57,6 +62,22 @@ These labs provide comprehensive coverage of Azure routing concepts and implemen
 **Objective:** Learn to associate route tables with subnets and verify effective routes to control network traffic within Azure virtual networks. You'll use Azure CLI and PowerShell to manage route tables and verify routing behavior.  
 **Estimated Time:** 60-75 minutes
 
+### [Lab 5: Route Propagation with Virtual Network Peering](/learning_outcome_2/labs/lab-005)
+**Objective:** Understand how routes are propagated across peered virtual networks in Azure. You'll configure VNet peering, observe route propagation behavior, and learn to control route propagation settings.  
+**Estimated Time:** 60-90 minutes
+
+### [Lab 6: Route Prioritization with Overlapping Routes](/learning_outcome_2/labs/lab-006)
+**Objective:** Learn how Azure handles overlapping routes and route prioritization. You'll create scenarios with multiple overlapping routes, understand route precedence, and verify effective routing behavior.  
+**Estimated Time:** 75-90 minutes
+
+### [Lab 7: Cross-Region Routing with Virtual Network Peering](/learning_outcome_2/labs/lab-007)
+**Objective:** Implement and test routing between virtual networks in different Azure regions using global VNet peering. You'll learn about cross-region connectivity, latency considerations, and route propagation across regions.  
+**Estimated Time:** 90-120 minutes
+
+### [Lab 8: Optimizing Traffic with Network Virtual Appliance](/learning_outcome_2/labs/lab-008)
+**Objective:** Deploy a Network Virtual Appliance (NVA) to optimize traffic between subnets. You'll configure traffic routing through the NVA, enable IP forwarding, and understand NVA-based network optimization scenarios.  
+**Estimated Time:** 60-90 minutes
+
 ## Resource Naming Conventions
 
 Throughout these labs, resources follow a consistent naming convention using the IP range 172.16.0.0/16:
@@ -90,33 +111,74 @@ If you encounter routing or connectivity issues during the labs:
    - Check effective routes using `az network nic show-effective-route-table`
    - Ensure route prefixes don't conflict with system routes
    - Verify next hop types and IP addresses are correct
+   - Check route prioritization when using overlapping routes
 
 2. **NVA Issues:**
    - Confirm IP forwarding is enabled on the NVA's network interface
    - Verify IP forwarding is enabled in the NVA's OS
    - Check NSG rules allow required traffic
    - Ensure NVA is properly configured to handle routed traffic
+   - Monitor NVA performance and capacity
 
-3. **Connectivity Testing:**
+3. **VNet Peering Issues:**
+   - Verify peering status is 'Connected' on both VNets
+   - Check 'Allow Gateway Transit' and 'Use Remote Gateway' settings
+   - Ensure non-overlapping address spaces between peered VNets
+   - Validate route propagation settings
+   - For global peering, verify regional connectivity
+
+4. **Cross-Region Routing:**
+   - Consider latency between regions
+   - Verify global VNet peering status
+   - Check regional dependencies and failover configurations
+   - Monitor bandwidth and performance metrics
+   - Ensure consistent route tables across regions
+
+5. **Connectivity Testing:**
    - Use `ping` and `traceroute` to verify traffic flow
    - Leverage Azure Network Watcher for detailed diagnostics
    - Check if VMs can reach their intended destinations
    - Verify DNS resolution is working correctly
+   - Test connectivity across peered networks
 
-4. **Common Mistakes:**
+6. **Common Mistakes:**
    - Route table not associated with subnet
    - Incorrect address prefixes in routes
    - Wrong next hop IP address
    - Missing or incorrect NSG rules
    - IP forwarding not enabled
+   - Overlapping IP address ranges
+   - Incorrect peering configurations
+   - Not accounting for cross-region latency
 
 ## Additional Resources
 
+### Core Documentation
 - [Microsoft Azure Documentation](https://docs.microsoft.com/en-us/azure/)
 - [Azure Networking Documentation](https://docs.microsoft.com/en-us/azure/networking/)
 - [Azure Architecture Center](https://docs.microsoft.com/en-us/azure/architecture/)
 - [Microsoft Learn - Azure Networking](https://docs.microsoft.com/en-us/learn/paths/azure-networking/)
+
+### Virtual Networks and Routing
 - [Azure Virtual Network Documentation](https://docs.microsoft.com/en-us/azure/virtual-network/)
 - [User-Defined Routes Overview](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview)
-- [Network Virtual Appliances](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#user-defined)
+- [Route Tables and Route Prioritization](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#how-azure-selects-a-route)
+- [System Routes in Azure](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#system-routes)
+
+### VNet Peering and Cross-Region Connectivity
+- [Virtual Network Peering](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview)
+- [Global VNet Peering](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview#cross-region)
+- [Route Propagation in Peered Networks](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview#routing)
+- [Cross-Region Connectivity Best Practices](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/)
+
+### Network Virtual Appliances
+- [Network Virtual Appliances Overview](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#user-defined)
+- [NVA High Availability](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha)
+- [NVA Performance Optimization](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/network-virtual-appliances)
+- [IP Forwarding Configuration](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#ip-forwarding)
+
+### Monitoring and Troubleshooting
 - [Network Watcher](https://docs.microsoft.com/en-us/azure/network-watcher/)
+- [Network Performance Monitor](https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-monitoring-overview)
+- [Connection Monitor](https://docs.microsoft.com/en-us/azure/network-watcher/connection-monitor-overview)
+- [Traffic Analytics](https://docs.microsoft.com/en-us/azure/network-watcher/traffic-analytics)
