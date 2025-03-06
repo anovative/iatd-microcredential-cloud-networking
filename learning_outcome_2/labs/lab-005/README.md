@@ -198,7 +198,85 @@
 
     ```bash
     az network vnet peering create \
-      --name $peering2Name \
+      --name iatd_labs_05_peering2 \
+      --resource-group $resourceGroupName \
+      --vnet-name $vnet2Name \
+      --remote-vnet $vnet1Name \
+      --allow-vnet-access true \
+      --allow-forwarded-traffic true \
+      --allow-gateway-transit false \
+      --use-remote-gateways true
+    ```
+
+    Expected Output:
+    ```json
+    {
+      "allowForwardedTraffic": true,
+      "allowGatewayTransit": false,
+      "allowVirtualNetworkAccess": true,
+      "name": "iatd_labs_05_peering2",
+      "peeringState": "Connected",
+      "provisioningState": "Succeeded",
+      "remoteVirtualNetwork": {
+        "id": "/subscriptions/your-subscription-id/resourceGroups/iatd_labs_05_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_05_vnet1"
+      },
+      "useRemoteGateways": true
+    }
+    ```
+
+### Post-Lab: Cleanup
+
+To avoid unnecessary costs, clean up the created resources using any of these methods:
+
+1.  **Azure Portal:**
+    * Navigate to Resource Groups
+    * Select `iatd_labs_05_rg`
+    * Click 'Delete resource group'
+    * Type the resource group name to confirm
+    * Click 'Delete'
+
+2.  **PowerShell:**
+    ```powershell
+    Remove-AzResourceGroup -Name $resourceGroupName -Force
+    ```
+    Expected Output:
+    ```
+    True
+    ```
+
+3.  **Azure CLI:**
+    ```bash
+    az group delete --name $resourceGroupName --yes
+    ```
+    Expected Output:
+    ```
+    No output indicates successful deletion
+    ```
+
+Verify Cleanup:
+* Check the Azure Portal to ensure the resource group and all resources are deleted
+* Run `Get-AzResourceGroup` or `az group list` to verify the resource group no longer exists
+
+### Post-Lab Summary
+
+**Key Takeaways:**
+* VNet peering enables direct network connectivity between virtual networks
+* Route propagation automatically shares routing information between peered networks
+* Both PowerShell and Azure CLI can be used to manage and verify network configurations
+* Proper network security and access controls are essential in peered networks
+
+**Next Steps:**
+* Explore more complex routing scenarios with multiple VNets
+* Learn about transitive routing in VNet peering
+* Study VNet peering costs and limitations
+* Practice implementing network security groups (NSGs) in peered networks
+
+**Additional Resources:**
+* [Virtual Network Peering Documentation](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview)
+* [Route Propagation in Azure](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview)
+* [Azure Networking Best Practices](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/networking-best-practices)
+
+**Congratulations!** You've successfully configured VNet peering with route propagation between two virtual networks. You've learned how to enable automatic exchange of routing information and verified connectivity between VMs in different VNets.
       --resource-group $resourceGroupName \
       --vnet-name $vnet2Name \
       --remote-vnet /subscriptions/$(az account show --query id --output tsv)/resourceGroups/$resourceGroupName/providers/Microsoft.Network/virtualNetworks/$vnet1Name \
@@ -251,6 +329,36 @@
     ```powershell
     $vm1 = Get-AzVM -Name $vm1Name -ResourceGroupName $resourceGroupName
     $vm2 = Get-AzVM -Name $vm2Name -ResourceGroupName $resourceGroupName
+    ```
+
+    Expected Output:
+    ```
+    ResourceGroupName : iatd_labs_05_rg
+    Name              : iatd_labs_05_vm1
+    Location          : australiaeast
+    Type              : Microsoft.Compute/virtualMachines
+    Tags              : {}
+
+    ResourceGroupName : iatd_labs_05_rg
+    Name              : iatd_labs_05_vm2
+    Location          : australiaeast
+    Type              : Microsoft.Compute/virtualMachines
+    Tags              : {}
+    ```
+
+    Get the private IPs:
+    ```powershell
+    $vm1PrivateIP = (Get-AzNetworkInterface -ResourceGroupName $resourceGroupName | Where-Object { $_.Name -like "*vm1*" }).IpConfigurations[0].PrivateIpAddress
+    $vm2PrivateIP = (Get-AzNetworkInterface -ResourceGroupName $resourceGroupName | Where-Object { $_.Name -like "*vm2*" }).IpConfigurations[0].PrivateIpAddress
+    Write-Host "VM1 Private IP: $vm1PrivateIP"
+    Write-Host "VM2 Private IP: $vm2PrivateIP"
+    ```
+
+    Expected Output:
+    ```
+    VM1 Private IP: 172.16.1.4
+    VM2 Private IP: 172.16.2.4
+    ```
     $vm1PrivateIP = ($vm1.PrivateIPAddresses)[0]
     $vm2PrivateIP = ($vm2.PrivateIPAddresses)[0]
 
@@ -273,11 +381,73 @@
 
     **Expected Result**: Should show the TCP test successful. This verifies the connectivity between the VMs.
 
-3.  **Verify Route Propagation (Optional - Portal/CLI):**
-    *   You can verify that the routes are being propagated.
-    *   **Using the Portal**
-        *   Login to portal
-        *   Go to the virtual network blade
+3.  **Verify Route Propagation:**
+
+    **Using PowerShell:**
+    ```powershell
+    # Get the peering status for VNet1
+    $vnet1 = Get-AzVirtualNetwork -Name $vnet1Name -ResourceGroupName $resourceGroupName
+    $peering1 = Get-AzVirtualNetworkPeering -VirtualNetworkName $vnet1Name -ResourceGroupName $resourceGroupName -Name iatd_labs_05_peering1
+    $peering1 | Format-List PeeringState, AllowForwardedTraffic, AllowGatewayTransit, UseRemoteGateways
+    ```
+
+    Expected Output:
+    ```
+    PeeringState         : Connected
+    AllowForwardedTraffic: True
+    AllowGatewayTransit  : False
+    UseRemoteGateways    : True
+    ```
+
+    **Using Azure CLI:**
+    ```bash
+    # Get the peering status for VNet2
+    az network vnet peering show \
+      --name iatd_labs_05_peering2 \
+      --resource-group $resourceGroupName \
+      --vnet-name $vnet2Name \
+      --query '{PeeringState:peeringState, AllowForwardedTraffic:allowForwardedTraffic, AllowGatewayTransit:allowGatewayTransit, UseRemoteGateways:useRemoteGateways}' \
+      -o json
+    ```
+
+    Expected Output:
+    ```json
+    {
+      "PeeringState": "Connected",
+      "AllowForwardedTraffic": true,
+      "AllowGatewayTransit": false,
+      "UseRemoteGateways": true
+    }
+    ```
+
+    **Using the Portal:**
+    1. Navigate to the Azure Portal
+    2. Go to Virtual Networks > `iatd_labs_05_vnet1` > Peerings
+    3. Click on `iatd_labs_05_peering1`
+    4. Verify the following settings:
+       * Peering status: Connected
+       * Allow forwarded traffic: Yes
+       * Allow gateway transit: No
+       * Use remote gateways: Yes
+
+    **Test Connectivity Between VMs:**
+    ```bash
+    # From VM1, ping VM2's private IP
+    ssh cloudadmin@$vm1PublicIP "ping -c 4 $vm2PrivateIP"
+    ```
+
+    Expected Output:
+    ```
+    PING 172.16.2.4 (172.16.2.4) 56(84) bytes of data.
+    64 bytes from 172.16.2.4: icmp_seq=1 ttl=64 time=1.45 ms
+    64 bytes from 172.16.2.4: icmp_seq=2 ttl=64 time=1.12 ms
+    64 bytes from 172.16.2.4: icmp_seq=3 ttl=64 time=1.08 ms
+    64 bytes from 172.16.2.4: icmp_seq=4 ttl=64 time=1.21 ms
+
+    --- 172.16.2.4 ping statistics ---
+    4 packets transmitted, 4 received, 0% packet loss, time 3005ms
+    rtt min/avg/max/mdev = 1.080/1.215/1.450/0.147 ms
+    ```
         *   Select the VNets one at a time and see the effective routes using the following steps.
         *   Click on `iatd_labs_05_vnet1`
         *   In Settings, select `Subnets`
