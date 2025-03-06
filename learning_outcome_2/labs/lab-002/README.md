@@ -82,7 +82,24 @@
       --generate-ssh-keys \
       --public-ip-sku Standard \
       --public-ip-address backend-vm-pip
+    ```
 
+    **Expected Output:**
+    ```json
+    {
+      "fqdns": "",
+      "id": "/subscriptions/your-subscription-id/resourceGroups/iatd_labs_02_rg/providers/Microsoft.Compute/virtualMachines/backend-vm",
+      "location": "australiaeast",
+      "macAddress": "00-0D-3A-1B-2C-3D",
+      "powerState": "VM running",
+      "privateIpAddress": "172.16.0.4",
+      "publicIpAddress": "20.53.123.45",
+      "resourceGroup": "iatd_labs_02_rg",
+      "zones": ""
+    }
+    ```
+
+    ```bash
     # Create frontend VM
     az vm create \
       --resource-group $RESOURCE_GROUP \
@@ -97,16 +114,16 @@
       --public-ip-address frontend-vm-pip
     ```
 
-    **Example Output:**
+    **Expected Output:**
     ```json
     {
       "fqdns": "",
-      "id": "...",
+      "id": "/subscriptions/your-subscription-id/resourceGroups/iatd_labs_02_rg/providers/Microsoft.Compute/virtualMachines/frontend-vm",
       "location": "australiaeast",
-      "macAddress": "...",
+      "macAddress": "00-0D-3A-4E-5F-6G",
       "powerState": "VM running",
-      "privateIpAddress": "172.16.0.4",
-      "publicIpAddress": "20.53.123.45",
+      "privateIpAddress": "172.16.1.4",
+      "publicIpAddress": "20.53.234.56",
       "resourceGroup": "iatd_labs_02_rg",
       "zones": ""
     }
@@ -132,6 +149,9 @@
     --------  -------  ---------------   ---------------   -----------
     Default   Active   172.16.0.0/16    VnetLocal        -
     Default   Active   0.0.0.0/0        Internet         -
+    Default   Active   10.0.0.0/8       None             -
+    Default   Active   192.168.0.0/16   None             -
+    Default   Active   100.64.0.0/10    None             -
     ```
 
 ### Part 4: Testing Network Connectivity
@@ -139,18 +159,22 @@
 1.  **Test Internal VNet Communication:**
 
     ```powershell
+    # Get frontend VM's private IP
+    $frontendIP = $(az vm show -g $RESOURCE_GROUP -n frontend-vm --query "privateIps" -o tsv)
+    
     # Test connection to frontend VM
-    Test-NetConnection -ComputerName 172.16.1.4 -Port 3389
+    Test-NetConnection -ComputerName $frontendIP -Port 3389
     ```
 
     **Expected Output:**
     ```
-    ComputerName     : 172.16.1.4
-    RemoteAddress    : 172.16.1.4
-    RemotePort       : 3389
-    InterfaceAlias   : Vnet
-    SourceAddress    : 172.16.0.4
-    TcpTestSucceeded : True
+    ComputerName           : 172.16.1.4
+    RemoteAddress          : 172.16.1.4
+    RemotePort            : 3389
+    InterfaceAlias        : Vnet
+    SourceAddress         : 172.16.0.4
+    PingSucceeded         : True
+    TcpTestSucceeded      : True
     ```
 
 2.  **Test Internet Connectivity:**
@@ -161,12 +185,13 @@
 
     **Expected Output:**
     ```
-    ComputerName     : www.microsoft.com
-    RemoteAddress    : 23.45.229.117
-    RemotePort       : 80
-    InterfaceAlias   : Vnet
-    SourceAddress    : 172.16.0.4
-    TcpTestSucceeded : True
+    ComputerName           : www.microsoft.com
+    RemoteAddress          : 23.45.229.117
+    RemotePort            : 80
+    InterfaceAlias        : Vnet
+    SourceAddress         : 172.16.0.4
+    PingSucceeded         : True
+    TcpTestSucceeded      : True
     ```
 
 ### Part 5: Cleanup

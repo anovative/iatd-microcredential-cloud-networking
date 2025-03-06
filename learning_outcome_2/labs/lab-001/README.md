@@ -186,7 +186,6 @@
     ```bash
     NVA_NAME="iatd_labs_01_nva"
     NIC_NAME="iatd_labs_01_nva_nic"
-    NVA_SUBNET_ID=$(az network vnet subnet show --resource-group $RESOURCE_GROUP --vnet-name $VNET_NAME --name $NVA_SUBNET_NAME --query id --output tsv)
     ```
 
 2.  **Create a Public IP Address for the NVA:**
@@ -235,7 +234,9 @@
 4.  **Create a Network Interface for the NVA:**
 
     ```bash
-    az network nic create --resource-group $RESOURCE_GROUP --name $NIC_NAME --subnet $NVA_SUBNET_ID --public-ip-address $PUBLIC_IP_ID
+    NVA_SUBNET_ID=$(az network vnet subnet show --resource-group $RESOURCE_GROUP --vnet-name $VNET_NAME --name $NVA_SUBNET_NAME --query id --output tsv)
+
+    az network nic create --resource-group $RESOURCE_GROUP --name $NIC_NAME --subnet $NVA_SUBNET_ID  --public-ip-address $PUBLIC_IP_ID
     ```
 
     **Example Output:**
@@ -304,17 +305,14 @@
       --nics $NIC_NAME \
       --image UbuntuLTS \
       --size Standard_B1ls \
-      --admin-username <your_username> \
-      --admin-password <your_password>
+      --admin-username azureuser \
+      --generate-ssh-keys
     ```
 
-    *Replace `<your_username>` and `<your_password>` with your desired credentials.*  *Note: Choose a smaller size VM to save on resources, such as 'Standard_B1ls'.*
-
-    **Example Output:**
-
+    **Expected Output:**
     ```json
     {
-      "fqdn": "iatd-labs-01-nva.australiaeast.cloudapp.azure.com",
+      "fqdn": "",
       "id": "/subscriptions/<subscription_id>/resourceGroups/iatd_labs_01_rg/providers/Microsoft.Compute/virtualMachines/iatd_labs_01_nva",
       "location": "australiaeast",
       "macAddress": "00-0D-3A-AA-BB-CC",
@@ -322,7 +320,7 @@
       "privateIpAddress": "172.16.2.4",
       "publicIpAddress": "20.188.229.75",
       "resourceGroup": "iatd_labs_01_rg",
-      "zones": []
+      "zones": ""
     }
     ```
 
@@ -603,7 +601,7 @@
         }
       ],
       "location": "australiaeast",
-      "macAddress": "00-0D-3A-AA-BB-DD",
+      "macAddress": "00-0D-3A-DD-EE-FF",
       "migrationPhase": "None",
       "name": "iatd_labs_01_vm_nic",
       "networkSecurityGroup": null,
@@ -625,23 +623,22 @@
       --nics $NIC_NAME_VM \
       --image UbuntuLTS \
       --size Standard_B1ls \
-      --admin-username <your_username> \
-      --admin-password <your_password>
+      --admin-username azureuser \
+      --generate-ssh-keys
     ```
 
-    **Example Output:**
-
+    **Expected Output:**
     ```json
     {
-      "fqdn": "iatd-labs-01-vm.australiaeast.cloudapp.azure.com",
+      "fqdn": "",
       "id": "/subscriptions/<subscription_id>/resourceGroups/iatd_labs_01_rg/providers/Microsoft.Compute/virtualMachines/iatd_labs_01_vm",
       "location": "australiaeast",
-      "macAddress": "00-0D-3A-AA-BB-DD",
+      "macAddress": "00-0D-3A-DD-EE-FF",
       "powerState": "VM running",
       "privateIpAddress": "172.16.1.4",
       "publicIpAddress": "20.188.230.84",
       "resourceGroup": "iatd_labs_01_rg",
-      "zones": []
+      "zones": ""
     }
     ```
 
@@ -652,7 +649,7 @@
 1.  **Connect to the NVA:** Use SSH to connect to the NVA VM using the public IP address. You'll need the username and password you set when creating the VM.
 
     ```bash
-    ssh <your_username>@<NVA_Public_IP>
+    ssh azureuser@<NVA_Public_IP>
     ```
 
     *(Replace `<NVA_Public_IP>` with the actual public IP of your NVA VM.)*
@@ -671,7 +668,7 @@
 3.  **Connect to the Protected VM:**  Use SSH to connect to the protected VM (iatd\_labs\_01\_vm) using the public IP address.
 
     ```bash
-    ssh <your_username>@<Protected_VM_Public_IP>
+    ssh azureuser@<Protected_VM_Public_IP>
     ```
     *(Replace `<Protected_VM_Public_IP>` with the actual public IP of your Protected VM.)*
 
