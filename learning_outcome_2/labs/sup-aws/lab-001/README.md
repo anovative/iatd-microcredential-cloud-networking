@@ -1,4 +1,4 @@
-# IATD Microcredential Cloud Networking: AWS Supplementary Lab - Route Tables and Transit Gateway
+## IATD Microcredential Cloud Networking: Supplementary Lab - AWS Transit Gateway and Advanced Routing
 
 **Objective:** This lab focuses on implementing advanced routing configurations in AWS using Route Tables and Transit Gateway. You'll learn to optimize traffic flow between VPCs and implement centralized network management using AWS Transit Gateway.
 
@@ -13,40 +13,7 @@
    - Basic networking principles
    - AWS Transit Gateway concepts
 
-### Lab Conventions
-
-* **AWS CLI:** All CLI interactions will occur within your local terminal
-* **Naming Conventions:** Resources follow the pattern `iatd_labs_aws_*`
-* **IP Address Range:** Using `172.16.0.0/16` for consistency with Azure labs
-* **Region:** Use `us-west-2` (or your preferred region)
-
-### Security Best Practices
-
-1. **IAM and Permissions:**
-   * Follow the principle of least privilege
-   * Use IAM roles instead of access keys
-   * Regularly rotate credentials
-   * Enable MFA for AWS accounts
-
-2. **Network Security:**
-   * Implement security groups with minimal required access
-   * Use NACLs for additional subnet-level security
-   * Enable VPC Flow Logs for network monitoring
-   * Keep Transit Gateway route tables well-documented
-
-3. **Instance Security:**
-   * Use AWS Systems Manager instead of SSH access
-   * Keep instances in private subnets when possible
-   * Apply security patches regularly
-   * Enable detailed CloudWatch monitoring
-
-4. **Resource Management:**
-   * Tag all resources for better tracking
-   * Set up AWS Config rules
-   * Enable AWS CloudTrail
-   * Implement proper resource cleanup procedures
-
-#### Resource Naming
+### Resource Naming Convention
 
 * **VPCs:**
   - Main VPC: `iatd_labs_aws_main_vpc`
@@ -66,7 +33,7 @@
   - Main VPC Instance: `iatd_labs_aws_main_instance`
   - Secondary VPC Instance: `iatd_labs_aws_secondary_instance`
 
-### Part 1: Creating VPCs and Subnets
+### Part 1: Creating VPCs and Subnets (Portal and CloudShell)
 
 1. **Create Main VPC:**
    ```bash
@@ -132,7 +99,7 @@
      --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=iatd_labs_aws_secondary_private}]'
    ```
 
-### Part 2: Creating and Configuring Transit Gateway
+### Part 2: Creating and Configuring Transit Gateway (CloudShell)
 
 1. **Create Transit Gateway:**
    ```bash
@@ -172,7 +139,7 @@
      --subnet-ids <SECONDARY_PRIVATE_SUBNET_ID>
    ```
 
-### Part 3: Configuring Route Tables
+### Part 3: Configuring Route Tables (Mixed)
 
 1. **Create Route Tables:**
    ```bash

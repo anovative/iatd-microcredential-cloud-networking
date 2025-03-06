@@ -1,4 +1,4 @@
-# IATD Microcredential Cloud Networking: GCP Supplementary Lab - VPC Network Peering and Cloud Router
+## IATD Microcredential Cloud Networking: Supplementary Lab - GCP VPC Peering and Cloud Router
 
 **Objective:** This lab focuses on implementing advanced routing configurations in Google Cloud Platform using VPC Network Peering and Cloud Router. You'll learn to optimize traffic flow between VPC networks and implement dynamic routing using Cloud Router.
 
@@ -13,40 +13,7 @@
    - Basic networking principles
    - VPC peering concepts
 
-### Lab Conventions
-
-* **gcloud CLI:** All CLI interactions will occur within your local terminal
-* **Naming Conventions:** Resources follow the pattern `iatd-labs-gcp-*`
-* **IP Address Range:** Using `172.16.0.0/16` for consistency with Azure labs
-* **Region:** Use `us-west1` (or your preferred region)
-
-### Security Best Practices
-
-1. **IAM and Permissions:**
-   * Follow the principle of least privilege
-   * Use service accounts for VM instances
-   * Regularly audit IAM bindings
-   * Enable Cloud Identity for user management
-
-2. **Network Security:**
-   * Implement VPC firewall rules with minimal access
-   * Enable VPC Flow Logs for network monitoring
-   * Use Cloud NAT for outbound internet access
-   * Keep Cloud Router configurations documented
-
-3. **Instance Security:**
-   * Use OS Login instead of SSH keys
-   * Place VMs in private subnets
-   * Enable Shielded VM features
-   * Configure automated security patches
-
-4. **Resource Management:**
-   * Apply labels for resource tracking
-   * Enable Cloud Asset Inventory
-   * Configure Cloud Audit Logs
-   * Follow proper cleanup procedures
-
-#### Resource Naming
+### Resource Naming Convention
 
 * **VPC Networks:**
   - Primary VPC: `iatd-labs-gcp-primary-vpc`
@@ -63,7 +30,7 @@
   - Primary VM: `iatd-labs-gcp-primary-vm`
   - Secondary VM: `iatd-labs-gcp-secondary-vm`
 
-### Part 1: Setting Up IAM and Service Accounts
+### Part 1: Setting Up IAM and Service Accounts (CloudShell)
 
 1. **Create Service Account:**
    ```bash
@@ -93,7 +60,7 @@
      cloudresourcemanager.googleapis.com
    ```
 
-### Part 2: Creating VPC Networks and Subnets
+### Part 2: Creating VPC Networks and Subnets (Portal and CloudShell)
 
 1. **Create Primary VPC Network:**
    ```bash
@@ -177,7 +144,7 @@
      --auto-create-routes
    ```
 
-### Part 3: Configuring Cloud Routers
+### Part 3: Configuring Cloud Routers (Mixed)
 
 1. **Create Cloud Router for Primary VPC:**
    ```bash
