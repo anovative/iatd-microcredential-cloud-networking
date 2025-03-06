@@ -78,6 +78,10 @@ These labs provide comprehensive coverage of Azure routing concepts and implemen
 **Objective:** Deploy a Network Virtual Appliance (NVA) to optimize traffic between subnets. You'll configure traffic routing through the NVA, enable IP forwarding, and understand NVA-based network optimization scenarios.  
 **Estimated Time:** 60-90 minutes
 
+### [Capstone Lab: Multi-Cloud Advanced Routing and Traffic Optimization](/learning_outcome_2/labs/lab-capstone)
+**Objective:** Apply advanced routing concepts and traffic optimization techniques across Azure, AWS, and GCP in a comprehensive capstone project. You'll implement enterprise-grade routing solutions, configure traffic optimization using cloud-native tools, and demonstrate proficiency with advanced networking features.  
+**Estimated Time:** 120-180 minutes
+
 ### Supplementary Labs (AWS and GCP)
 
 These supplementary labs extend your learning to other major cloud providers, demonstrating similar routing and traffic optimization concepts in AWS and GCP environments:
