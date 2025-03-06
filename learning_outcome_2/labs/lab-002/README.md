@@ -1,16 +1,6 @@
 ## IATD Microcredential Cloud Networking: Lab 2 - Examining Azure System Routes
 
-**Objective:** Explore the system routes automatically configured in an Azure virtual network.
-
-**Scenario:** You have deployed a virtual network in Azure with several subnets and a VPN gateway connection to your on-premises network. This lab will examine the routes Azure automatically creates (system routes), understand their purpose, and verify basic connectivity. Even without creating custom User Defined Routes (UDRs), a default route table always exists.
-
-**Outcomes:**
-
-*   Inspection of the system routes in a route table (the default route table).
-*   Identification of the VNet Local, On-premises (if a VPN gateway exists), and Internet routes.
-*   Understanding of the purpose of each system route.
-*   Verification of connectivity based on system routes.
-*   Demonstrate local VNet, internet bound and gateway bound traffic flow with simple PowerShell testing.
+**Objective:** Explore and understand the system routes automatically configured in an Azure virtual network, including their purpose, behavior, and how they facilitate network communication.
 
 **Estimated Time:** 60 - 75 minutes
 
@@ -19,26 +9,31 @@
 1.  **Azure Subscription:** An active Azure subscription is required. A free account is available at [https://azure.microsoft.com/free/](https://azure.microsoft.com/free/).
 2.  **Basic Networking Knowledge:** Familiarity with virtual networks, subnets, IP addressing, and basic routing concepts.
 
-**Lab Conventions:**
+**Let's get started!**
 
-*   **Azure Cloud Shell:** PowerShell interactions will primarily occur within the Azure Cloud Shell environment.
-*   **Naming Conventions:** Resource names generally follow the `iatd_labs_02_*` convention, though some existing resource names might be reused for brevity.
-*   **IP Address Range:** While examining existing routes, observe any address ranges configured.
-*   **Location:** Consistent Azure region usage is recommended.
+### Lab Conventions
 
-#### Resource Naming (Example):
+*   **Azure Cloud Shell:** PowerShell and CLI interactions will occur within the Azure Cloud Shell environment.
+*   **Naming Conventions:** Resource names follow the convention `iatd_labs_02_*`.
+*   **IP Address Range:** Using `172.16.0.0/16` for consistency across labs.
+*   **Location:** Choose a consistent Azure region.
 
-*   **Resource Group:** `iatd_labs_02_rg` (or an existing resource group)
-*   **Virtual Network:** `iatd_labs_02_vnet` (or an existing virtual network)
+#### Resource Naming
 
-### Part 1: Setting up the Environment
+*   **Resource Group:** `iatd_labs_02_rg`
+*   **Virtual Network:** `iatd_labs_02_vnet`
+*   **Backend Subnet:** `backend-subnet`
+*   **Frontend Subnet:** `frontend-subnet`
+*   **Backend VM:** `backend-vm`
+*   **Frontend VM:** `frontend-vm`
+*   **Public IPs:** `<vm-name>-pip`
 
-We will reuse some components to keep costs and time down so some objects won't adhere to the naming standard, so make sure to update names for these resources as needed.
+### Part 1: Setting up the Environment - Azure Portal
 
-1.  **Sign in to the Azure Portal:** Browse to [https://portal.azure.com/](https://portal.azure.com/) and sign in.
+1.  **Sign in to the Azure Portal:**
+    *   Browse to [https://portal.azure.com/](https://portal.azure.com/) and sign in.
 
-2.  **Create a Resource Group:** (If you don't have one from the previous lab you can use)
-
+2.  **Create Resource Group:**
     *   Search for "Resource groups" and select.
     *   Click **Create**.
     *   Select your subscription.
@@ -46,8 +41,7 @@ We will reuse some components to keep costs and time down so some objects won't 
     *   Region: Select your region.
     *   Click **Review + create**, then **Create**.
 
-3.  **Create a Virtual Network:** (If you don't have one from the previous lab you can use)
-
+3.  **Create Virtual Network:**
     *   Search for "Virtual networks" and select.
     *   Click **Create**.
     *   **Basics Tab:**
@@ -56,160 +50,146 @@ We will reuse some components to keep costs and time down so some objects won't 
         *   Name: `iatd_labs_02_vnet`
         *   Region: Your region.
     *   **IP Addresses Tab:**
-        *   IPv4 address space: `172.16.10.0/24`
-        *   Click **Review + create**, then **Create**.
-
-4.  **Create Subnet:**
-
-    *   Navigate to the `iatd_labs_02_vnet` resource.
-    *   Click on **Subnets** under **Settings**.
-    *   Click **Add subnet**.
-    *   Subnet name: `backend`
-    *   Subnet address range: `172.16.10.0/27`
-    *   Click **Save**.
-    *   Click **Add subnet**.
-    *   Subnet name: `frontend`
-    *   Subnet address range: `172.16.10.32/27`
-    *   Click **Save**.
-
-### Part 2: Examining System Routes in the Azure Portal
-
-1.  **Navigate to the Virtual Network:**
-
-    *   In the Azure portal, search for and select "Virtual networks".
-    *   Select your virtual network (e.g., `iatd_labs_02_vnet`).
-
-2.  **Access Effective Routes:**
-
-    *Under 'Settings', select 'Subnets'.*
-    *Select a Subnet (e.g., 'backend').*
-    *Under 'Settings', select 'Effective routes'.*
-
-3.  **Identify System Routes:**
-
-    *Examine the listed routes. You will typically see the following:*
-
-    *   **VNet Local:** This route enables communication within the virtual network. The destination address prefix will be the address space of your VNet (e.g., `172.16.10.0/24` if that's your VNet's address space).  The "Next hop type" will be `VNetLocal`.
-    *   **Internet:** This route allows outbound communication to the internet. The destination address prefix is `0.0.0.0/0`, and the "Next hop type" is `Internet`.
-    *   **None:** "Next hop type" will be `None`.  "Address prefix" destination will vary on IP ranges within the environment
-    *   **On-premises:** If you have a VPN gateway or ExpressRoute connection, you'll see routes representing your on-premises network(s). The destination address prefixes will be the address ranges of your on-premises network, and the "Next hop type" will be `Virtual network gateway`. (This might not be present if you don't have a VPN gateway connected.)
-
-4.  **Repeat for Other Subnets:**
-
-    *   Repeat steps 2 and 3 for the other subnet(s) in your virtual network. Note that the system routes are generally the same for all subnets *unless* you've associated a User Defined Route table with a specific subnet.
-
-### Part 3: Verifying Connectivity
-
-Let's create two VMs to test network connectivity.
-
-1.  **Open Cloud Shell:** In the Azure Portal, click the Cloud Shell icon. Select **PowerShell** if prompted.
-2.  **Create 2 Virtual Machine in the Azure Portal:**
-
-    *   Search for "Virtual machines" and select.
-    *   Click **Create**, then **Azure virtual machine**.
-    *   **Basics Tab:**
-        *   Subscription: Your subscription.
-        *   Resource group: `iatd_labs_02_rg`
-        *   Virtual machine name: `backend-vm`
-        *   Region: Your region.
-        *   Image: `UbuntuLTS`
-        *   Size: `Standard_B1ls`
-        *   Username: `<your_username>`
-        *   Password: `<your_password>`
-    *   **Networking Tab:**
-        *   Virtual network: `iatd_labs_02_vnet`
-        *   Subnet: `backend`
-        *   Public IP: Create New one called `backend-ip`
+        *   IPv4 address space: `172.16.0.0/16`
+        *   Add two subnets:
+            1. Name: `backend-subnet`, Address range: `172.16.0.0/24`
+            2. Name: `frontend-subnet`, Address range: `172.16.1.0/24`
     *   Click **Review + create**, then **Create**.
 
-    *   Search for "Virtual machines" and select.
-    *   Click **Create**, then **Azure virtual machine**.
-    *   **Basics Tab:**
-        *   Subscription: Your subscription.
-        *   Resource group: `iatd_labs_02_rg`
-        *   Virtual machine name: `frontend-vm`
-        *   Region: Your region.
-        *   Image: `UbuntuLTS`
-        *   Size: `Standard_B1ls`
-        *   Username: `<your_username>`
-        *   Password: `<your_password>`
-    *   **Networking Tab:**
-        *   Virtual network: `iatd_labs_02_vnet`
-        *   Subnet: `frontend`
-        *   Public IP: Create New one called `frontend-ip`
-    *   Click **Review + create**, then **Create**.
+### Part 2: Creating Test VMs - Azure CLI
 
-    **Note down the private IP address for the following VMs as seen in Azure Portal in Virtual Machines Section as these are needed in a later task!**
-    *   `backend-vm` - example private IP `172.16.10.4`
-    *   `frontend-vm` - example private IP `172.16.10.36`
+1.  **Open Cloud Shell:** In the Azure Portal, click the Cloud Shell icon. Select **Bash**.
 
-    **Note down the Public IP address for the following VMs as seen in Azure Portal in Virtual Machines Section as these are needed in a later task!**
-    *   `backend-vm` - example public IP `20.98.76.54`
-    *   `frontend-vm` - example public IP `20.123.45.67`
+2.  **Set Variables:**
 
-### Part 4: PowerShell testing traffic Flow
-We can check traffic by a number of methods, however one simple methods for testing from PowerShell using Test-NetConnection. For all tasks, execute them from cloudShell within the portal to do this, click the **Cloud Shell** icon in the top navigation bar. Select PowerShell if prompted.
+    ```bash
+    # Set variables
+    RESOURCE_GROUP="iatd_labs_02_rg"
+    LOCATION="australiaeast"  # Replace with your region
+    VNET_NAME="iatd_labs_02_vnet"
+    BACKEND_SUBNET="backend-subnet"
+    FRONTEND_SUBNET="frontend-subnet"
 
-*note: Remember to wait for VMs to provision before moving forward or commands may not resolve addresses correctly as Azure sets them up.*
+    # Create backend VM
+    az vm create \
+      --resource-group $RESOURCE_GROUP \
+      --name backend-vm \
+      --image UbuntuLTS \
+      --vnet-name $VNET_NAME \
+      --subnet $BACKEND_SUBNET \
+      --size Standard_B1ls \
+      --admin-username azureuser \
+      --generate-ssh-keys \
+      --public-ip-sku Standard \
+      --public-ip-address backend-vm-pip
 
-1.  **Checking internal Connectivity:** From Cloudshell check connectivity is established between your two VMs (you will need your `backend-vm` private IP you saved to do this)
-
-    ```powershell
-    Test-NetConnection -ComputerName 172.16.10.4 -port 3389
+    # Create frontend VM
+    az vm create \
+      --resource-group $RESOURCE_GROUP \
+      --name frontend-vm \
+      --image UbuntuLTS \
+      --vnet-name $VNET_NAME \
+      --subnet $FRONTEND_SUBNET \
+      --size Standard_B1ls \
+      --admin-username azureuser \
+      --generate-ssh-keys \
+      --public-ip-sku Standard \
+      --public-ip-address frontend-vm-pip
     ```
 
-    Example of successful output:
-    ```text
-    ComputerName     : 172.16.10.4
-    RemoteAddress    : 172.16.10.4
+    **Example Output:**
+    ```json
+    {
+      "fqdns": "",
+      "id": "...",
+      "location": "australiaeast",
+      "macAddress": "...",
+      "powerState": "VM running",
+      "privateIpAddress": "172.16.0.4",
+      "publicIpAddress": "20.53.123.45",
+      "resourceGroup": "iatd_labs_02_rg",
+      "zones": ""
+    }
+    ```
+
+### Part 3: Examining System Routes - PowerShell
+
+1.  **Switch to PowerShell:** In Cloud Shell, select PowerShell.
+
+2.  **View Effective Routes:**
+
+    ```powershell
+    # Get the Network Interface ID for the backend VM
+    $nicId = $(az vm show -g $RESOURCE_GROUP -n backend-vm --query "networkProfile.networkInterfaces[0].id" -o tsv)
+    
+    # View effective routes
+    az network nic show-effective-route-table --ids $nicId -o table
+    ```
+
+    **Expected Output:**
+    ```
+    Source    State    Address Prefix    Next Hop Type     Next Hop IP
+    --------  -------  ---------------   ---------------   -----------
+    Default   Active   172.16.0.0/16    VnetLocal        -
+    Default   Active   0.0.0.0/0        Internet         -
+    ```
+
+### Part 4: Testing Network Connectivity
+
+1.  **Test Internal VNet Communication:**
+
+    ```powershell
+    # Test connection to frontend VM
+    Test-NetConnection -ComputerName 172.16.1.4 -Port 3389
+    ```
+
+    **Expected Output:**
+    ```
+    ComputerName     : 172.16.1.4
+    RemoteAddress    : 172.16.1.4
     RemotePort       : 3389
-    InterfaceAlias   : Virtual
-    SourceAddress    : 172.17.0.5
+    InterfaceAlias   : Vnet
+    SourceAddress    : 172.16.0.4
     TcpTestSucceeded : True
     ```
 
-2.  **Checking Internet Connectivity:** From Cloudshell check internet connectivity works correctly from Cloudshell
+2.  **Test Internet Connectivity:**
 
     ```powershell
-    Test-NetConnection -ComputerName www.google.com -port 80
+    Test-NetConnection -ComputerName www.microsoft.com -Port 80
     ```
 
-    Example of successful output:
-    ```text
-    ComputerName     : www.google.com
-    RemoteAddress    : 142.250.207.142
+    **Expected Output:**
+    ```
+    ComputerName     : www.microsoft.com
+    RemoteAddress    : 23.45.229.117
     RemotePort       : 80
-    InterfaceAlias   : Virtual
-    SourceAddress    : 172.17.0.5
+    InterfaceAlias   : Vnet
+    SourceAddress    : 172.16.0.4
     TcpTestSucceeded : True
     ```
-
-3.  **Checking inter-VNET Connectivity:** This task involves VPN setup. As this might be time consuming we will skip for this Lab!
 
 ### Part 5: Cleanup
 
-To avoid unnecessary charges, remove the resources created in this lab.
-1.  Delete Resource Group in the Azure Portal
+1.  **Delete Resource Group:**
 
-    *   **Azure Portal:** Locate the `iatd_labs_02_rg` Resource Group and Delete from the portal.
-    **OR**
+    *   **Azure Portal:**
+        *   Navigate to the Resource Group `iatd_labs_02_rg`
+        *   Click **Delete resource group**
+        *   Enter the resource group name to confirm
+        *   Click **Delete**
 
-2.  Open Cloud Shell
+    *   **Azure CLI:**
+        ```bash
+        az group delete --name iatd_labs_02_rg --yes --no-wait
+        ```
 
-    *   **Azure Cloud Shell:** Execute the following command:
+### Post-Lab Questions
 
-```azurecli
-   az group delete --name $RESOURCE_GROUP --yes --no-wait
-```
+1. What are the default system routes in an Azure VNet and why are they important?
+2. How does the VnetLocal route facilitate communication between subnets?
+3. Under what circumstances would you need to override system routes with UDRs?
 
-### Post-Lab Questions:
-
-1.  What are Azure system routes and why are they important?
-2.  Explain the purpose of the "VNetLocal" system route.
-3.  Under what circumstances might you NOT see an "On-premises" route in your system routes?
-4.  How do User Defined Routes (UDRs) interact with system routes?  What happens when a UDR conflicts with a system route?
-5.  What are some potential issues that could arise if system routes are not correctly configured or understood?
-6.  Why the `Test-NetConnection` is suitable to test those routing configuration?
-7.  In what situation it would be more appropriate to utilise `TCPing` than `Test-NetConnection`
-
-**Congratulations!** You've explored Azure system routes and verified basic network connectivity. Understanding these fundamental routes is crucial for building more complex and customized network topologies in Azure.
+**Additional Resources:**
+- [Azure Virtual Network Traffic Routing](https://docs.microsoft.com/azure/virtual-network/virtual-networks-udr-overview)
+- [System Routes Documentation](https://docs.microsoft.com/azure/virtual-network/virtual-networks-udr-overview#system-routes)
