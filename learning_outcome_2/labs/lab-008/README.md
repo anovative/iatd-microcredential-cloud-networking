@@ -184,6 +184,22 @@
       --location $location
     ```
 
+    Expected Output:
+    ```json
+    {
+      "publicIp": {
+        "name": "iatd_labs_08_vm_b_pip",
+        "resourceGroup": "iatd_labs_08_rg",
+        "location": "australiaeast",
+        "sku": {
+          "name": "Standard"
+        },
+        "publicIPAllocationMethod": "Static",
+        "ipAddress": "20.1.2.4"
+      }
+    }
+    ```
+
     ```bash
     # Create Public IP for NVA
     az network public-ip create \
@@ -192,6 +208,22 @@
       --allocation-method Static \
       --sku Standard \
       --location $location
+    ```
+
+    Expected Output:
+    ```json
+    {
+      "publicIp": {
+        "name": "iatd_labs_08_nva_pip",
+        "resourceGroup": "iatd_labs_08_rg",
+        "location": "australiaeast",
+        "sku": {
+          "name": "Standard"
+        },
+        "publicIPAllocationMethod": "Static",
+        "ipAddress": "20.1.2.5"
+      }
+    }
     ```
 
     **Verify Public IPs:**

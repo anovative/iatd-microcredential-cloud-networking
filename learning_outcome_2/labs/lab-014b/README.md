@@ -23,9 +23,9 @@
 
 #### Resource Naming
 
-* **Resource Group:** `iatd_labs_12a_rg` (reusing from previous labs)
-* **Virtual Network:** `iatd_labs_12a_vnet` (reusing from previous labs)
-* **Route Server:** `iatd_labs_12a_routeserver` (reusing from previous labs)
+* **Resource Group:** `iatd_labs_14b_rg` (if creating new, otherwise reuse `iatd_labs_14a_rg`)
+* **Virtual Network:** `iatd_labs_14b_vnet` (if creating new, otherwise reuse `iatd_labs_14a_vnet`)
+* **Route Server:** `iatd_labs_14b_routeserver` (if creating new, otherwise reuse `iatd_labs_14a_routeserver`)
 * **ExpressRoute Circuit:** Your existing ExpressRoute circuit
 
 ### Part 1: Understanding the iBGP Full Mesh Problem
@@ -52,7 +52,7 @@ This creates a scalability problem:
 * **50 routers:** 1,225 peering sessions
 * **100 routers:** 4,950 peering sessions
 
-![iBGP Full Mesh](https://i.imgur.com/example-full-mesh.png)
+![iBGP Full Mesh](https://learn.microsoft.com/en-us/azure/route-server/media/route-server-ibgp/full-mesh.png)
 
 This full mesh requirement creates several challenges:
 
@@ -73,7 +73,7 @@ In a route reflector configuration:
 2. **Clients:** iBGP peers that connect to the route reflector
 3. **Non-Clients:** Other iBGP peers that are not clients of the route reflector
 
-![Route Reflector Topology](https://i.imgur.com/example-route-reflector.png)
+![Route Reflector Topology](https://learn.microsoft.com/en-us/azure/route-server/media/route-server-ibgp/route-reflector.png)
 
 The route reflector follows these rules for route advertisement:
 
@@ -115,6 +115,10 @@ Azure Route Server acts as a route reflector in the Azure environment. It automa
 1. **Azure Route Server as a Route Reflector:**
 
    ```powershell
+   # Define variables
+   $resourceGroupName = "iatd_labs_14b_rg"
+   $routeServerName = "iatd_labs_14b_routeserver"
+   
    # Get Route Server details
    $routeServer = Get-AzRouteServer -Name $routeServerName -ResourceGroupName $resourceGroupName
    
@@ -124,12 +128,12 @@ Azure Route Server acts as a route reflector in the Azure environment. It automa
 
    Expected Output (partial):
    ```
-   Name                : iatd_labs_12a_routeserver
-   ResourceGroupName   : iatd_labs_12a_rg
+   Name                : iatd_labs_14b_routeserver
+   ResourceGroupName   : iatd_labs_14b_rg
    Location            : australiaeast
    ProvisioningState   : Succeeded
    VirtualHubId        : 
-   HostedSubnet        : /subscriptions/.../resourceGroups/iatd_labs_12a_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_12a_vnet/subnets/RouteServerSubnet
+   HostedSubnet        : /subscriptions/.../resourceGroups/iatd_labs_14b_rg/providers/Microsoft.Network/virtualNetworks/iatd_labs_14b_vnet/subnets/RouteServerSubnet
    ```
 
 2. **View BGP Peers Connected to the Route Server:**
@@ -142,8 +146,8 @@ Azure Route Server acts as a route reflector in the Azure environment. It automa
    Expected Output (example):
    ```
    Name              : peer1
-   ResourceGroupName : iatd_labs_12a_rg
-   RouteServerName   : iatd_labs_12a_routeserver
+   ResourceGroupName : iatd_labs_14b_rg
+   RouteServerName   : iatd_labs_14b_routeserver
    PeerIp            : 10.0.1.4
    PeerAsn           : 65001
    ConnectionState   : Connected
@@ -198,17 +202,70 @@ Azure Route Server acts as a route reflector in the Azure environment. It automa
 
 ### Clean Up Resources
 
-1. **Note on Resource Cleanup:**
+If you created any resources specifically for this lab, follow these steps to clean them up:
 
-   Since we are primarily working with conceptual understanding in this lab and reusing resources from previous labs, there are no specific resources to clean up unless you created test resources specifically for this lab.
+1. **Remove Any Test VMs:**
 
    ```powershell
-   # If you created any test resources, you can remove them as follows
-   # Example: Remove a test VM
-   Remove-AzVM -Name "your-test-vm" -ResourceGroupName $resourceGroupName -Force
+   # Define variables
+   $resourceGroupName = "iatd_labs_14b_rg"
+   $vmName = "your-test-vm" # Replace with your test VM name
+   
+   # Remove the test VM
+   Remove-AzVM -Name $vmName -ResourceGroupName $resourceGroupName -Force
    ```
 
-   > **Important Note:** If you are completely finished with all labs, refer to the cleanup instructions in Lab 14a to remove all Azure resources.
+2. **Remove Any Test Virtual Networks:**
+
+   ```powershell
+   # Define variables
+   $resourceGroupName = "iatd_labs_14b_rg"
+   $vnetName = "your-test-vnet" # Replace with your test VNet name
+   
+   # Remove the test VNet
+   Remove-AzVirtualNetwork -Name $vnetName -ResourceGroupName $resourceGroupName -Force
+   ```
+
+3. **Remove Any Test Subnets:**
+
+   ```powershell
+   # Define variables
+   $resourceGroupName = "iatd_labs_14b_rg"
+   $vnetName = "your-test-vnet" # Replace with your test VNet name
+   $subnetName = "your-test-subnet" # Replace with your test subnet name
+   
+   # Remove the test subnet
+   Remove-AzVirtualNetworkSubnetConfig -Name $subnetName -VirtualNetwork (Get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $resourceGroupName)
+   ```
+
+4. **Remove Any Test Route Servers:**
+
+   ```powershell
+   # Define variables
+   $resourceGroupName = "iatd_labs_14b_rg"
+   $routeServerName = "your-test-routeserver" # Replace with your test Route Server name
+   
+   # Remove the test Route Server
+   Remove-AzRouteServer -Name $routeServerName -ResourceGroupName $resourceGroupName -Force
+   ```
+
+5. **Remove Any Test Resource Groups:**
+
+   ```powershell
+   # Define variables
+   $resourceGroupName = "iatd_labs_14b_rg"
+   
+   # Remove the test resource group
+   Remove-AzResourceGroup -Name $resourceGroupName -Force
+   ```
+
+### Additional Resources
+
+For more information on route reflectors and BGP, refer to the following resources:
+
+* **Azure Route Server Documentation:** <https://learn.microsoft.com/en-us/azure/route-server/>
+* **BGP on Azure Documentation:** <https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview>
+* **RFC 4456: BGP Route Reflection:** <https://tools.ietf.org/html/rfc4456>
 
 ### Post-Lab Summary
 
