@@ -78,13 +78,65 @@ These labs provide comprehensive coverage of Azure routing concepts and implemen
 **Objective:** Deploy a Network Virtual Appliance (NVA) to optimize traffic between subnets. You'll configure traffic routing through the NVA, enable IP forwarding, and understand NVA-based network optimization scenarios.  
 **Estimated Time:** 60-90 minutes
 
+### [Lab 9a: BGP Fundamentals - Autonomous Systems (AS) and Neighbor Relationships](/learning_outcome_2/labs/lab-009a)
+**Objective:** Introduce the concept of Autonomous Systems (AS) and BGP neighbor relationships, setting the foundation for understanding BGP peering. You'll learn about AS numbers, BGP neighbor relationships, and the basics of BGP configuration.  
+**Estimated Time:** 45-60 minutes
+
+### [Lab 9b: BGP Fundamentals - iBGP vs. eBGP and Basic Peering Configuration](/learning_outcome_2/labs/lab-009b)
+**Objective:** Differentiate between iBGP and eBGP peering, and set up basic BGP peering between VMs using simulated BGP commands. You'll understand the differences between internal and external BGP and implement basic peering configurations.  
+**Estimated Time:** 45-60 minutes
+
+### [Lab 10a: BGP Path Attributes and Route Selection](/learning_outcome_2/labs/lab-010a)
+**Objective:** Understand BGP path attributes and how they influence route selection in BGP. You'll learn about the various attributes that BGP uses to determine the best path to a destination.  
+**Estimated Time:** 45-60 minutes
+
+### [Lab 10b: BGP Route Filtering and Manipulation](/learning_outcome_2/labs/lab-010b)
+**Objective:** Understand BGP route filtering and manipulation techniques, including AS_PATH prepending, route filtering, and route summarization. You'll learn how to control which routes are advertised to or received from BGP neighbors.  
+**Estimated Time:** 60-75 minutes
+
+### [Lab 11a: ExpressRoute BGP and Basic Configuration](/learning_outcome_2/labs/lab-011a)
+**Objective:** Configure BGP peering over an Azure ExpressRoute connection and understand the fundamental BGP configuration on the Azure side. You'll learn how to set up and verify BGP peering with ExpressRoute.  
+**Estimated Time:** 60-90 minutes
+
+### [Lab 11b: ExpressRoute Advanced Configuration and Routing](/learning_outcome_2/labs/lab-011b)
+**Objective:** Implement advanced ExpressRoute configurations including route filtering and traffic optimization. You'll learn how to control route advertisements and optimize traffic flow over ExpressRoute connections.  
+**Estimated Time:** 60-90 minutes
+
+### [Lab 12a: Implementing Route Server and Utilizing BGP Communities](/learning_outcome_2/labs/lab-012a)
+**Objective:** Implement an Azure Route Server and learn how BGP communities can be used for route control, traffic management, and applying routing policies. You'll understand how to centralize routing in Azure using Route Server.  
+**Estimated Time:** 60-75 minutes
+
+### [Lab 12b: Advanced Route Server Configurations](/learning_outcome_2/labs/lab-012b)
+**Objective:** Explore advanced Route Server configurations including integration with Network Virtual Appliances and ExpressRoute. You'll learn how to implement complex routing scenarios using Route Server.  
+**Estimated Time:** 60-75 minutes
+
+### [Lab 13a: Advanced BGP - Route Filtering and AS Number Management](/learning_outcome_2/labs/lab-013a)
+**Objective:** Implement route filtering techniques and understand the principles of Autonomous System (AS) number management to control route advertisements and secure your network. You'll learn how to filter routes and manage AS numbers effectively.  
+**Estimated Time:** 60 minutes
+
+### [Lab 13b: Advanced BGP - Route Aggregation and Summarization](/learning_outcome_2/labs/lab-013b)
+**Objective:** Implement route aggregation and summarization techniques to optimize routing tables and improve network performance. You'll learn how to reduce the size of routing tables through summarization.  
+**Estimated Time:** 60 minutes
+
+### [Lab 14a: Advanced BGP - Path Selection and Route Reflector Functionality](/learning_outcome_2/labs/lab-014a)
+**Objective:** Examine advanced BGP route selection rules and route reflector concepts to optimize routing in complex network environments. You'll understand how BGP selects the best path and how route reflectors can simplify BGP deployments.  
+**Estimated Time:** 60 minutes
+
+### [Lab 14b: Advanced BGP - Traffic Engineering and Load Balancing](/learning_outcome_2/labs/lab-014b)
+**Objective:** Implement BGP-based traffic engineering and load balancing techniques to optimize network performance and reliability. You'll learn how to influence traffic flow using BGP attributes.  
+**Estimated Time:** 60 minutes
+
+### [Lab 15: Wide Area Network (WAN) Fundamentals - Hub and Spoke Architecture](/learning_outcome_2/labs/lab-015)
+**Objective:** Explore the hub and spoke WAN architecture in Azure using Virtual Network Peering as a connectivity method. You'll learn how to implement a centralized network topology using multiple implementation methods (Portal, CLI, PowerShell).  
+**Estimated Time:** 90 minutes
+
 ### [Capstone Lab: Multi-Cloud Advanced Routing and Traffic Optimization](/learning_outcome_2/labs/lab-capstone)
 **Objective:** Apply advanced routing concepts and traffic optimization techniques across Azure, AWS, and GCP in a comprehensive capstone project. You'll implement enterprise-grade routing solutions, configure traffic optimization using cloud-native tools, and demonstrate proficiency with advanced networking features.  
 **Estimated Time:** 120-180 minutes
 
 ### Supplementary Labs (AWS and GCP)
 
-These supplementary labs extend your learning to other major cloud providers, demonstrating similar routing and traffic optimization concepts in AWS and GCP environments:
+These supplementary labs extend your learning to other major cloud providers, demonstrating similar routing and traffic optimization concepts in AWS and GCP environments. All supplementary labs maintain consistent structure and documentation with the core Azure labs, including comprehensive cleanup instructions, detailed verification steps, expected command outputs, and post-lab summaries.
 
 ### AWS Supplementary Labs
 
@@ -92,11 +144,67 @@ These supplementary labs extend your learning to other major cloud providers, de
 **Objective:** Implement advanced routing configurations in AWS using Transit Gateway. You'll learn to connect multiple VPCs, configure route tables, and optimize traffic flow using AWS-native networking services.  
 **Estimated Time:** 90-120 minutes
 
+This lab focuses on:
+- VPC connectivity through Transit Gateway
+- Configuring and managing route tables
+- Optimizing traffic flow between VPCs
+- Implementing centralized network management
+- Following consistent IP addressing scheme (172.16.0.0/16)
+
+**Lab Details:**
+
+- Create a Transit Gateway and attach VPCs
+- Configure route tables for VPCs
+- Implement route propagation and optimization
+- Verify traffic flow between VPCs
+- Clean up resources
+
+**Verification Steps:**
+
+- Verify Transit Gateway creation
+- Check route table configurations
+- Test traffic flow between VPCs
+- Validate route propagation
+
+**Post-Lab Summary:**
+
+- Summarize key takeaways from the lab
+- Discuss challenges and solutions
+- Provide recommendations for further learning
+
 ### GCP Supplementary Labs
 
 #### [Lab 1: VPC Network Peering and Cloud Router](/learning_outcome_2/labs/sup-gcp/lab-001)
 **Objective:** Configure VPC Network Peering and Cloud Router in Google Cloud Platform. You'll implement dynamic routing between VPC networks and optimize traffic flow using GCP's networking features.  
 **Estimated Time:** 90-120 minutes
+
+This lab focuses on:
+- VPC network peering configuration
+- Dynamic routing with Cloud Router
+- Traffic flow optimization between VPC networks
+- Implementing BGP routing in GCP
+- Maintaining consistent network architecture
+
+**Lab Details:**
+
+- Create VPC networks and peer them
+- Configure Cloud Router for dynamic routing
+- Implement BGP routing
+- Optimize traffic flow between VPC networks
+- Clean up resources
+
+**Verification Steps:**
+
+- Verify VPC network peering
+- Check Cloud Router configuration
+- Test traffic flow between VPC networks
+- Validate BGP routing
+
+**Post-Lab Summary:**
+
+- Summarize key takeaways from the lab
+- Discuss challenges and solutions
+- Provide recommendations for further learning
 
 ## Resource Naming Conventions
 
@@ -195,6 +303,8 @@ If you encounter routing or connectivity issues during the labs:
 - [Network Virtual Appliances Overview](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#user-defined)
 - [NVA High Availability](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha)
 - [NVA Performance Considerations](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha#nva-performance-considerations)
+- [NVA Performance Optimization](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/network-virtual-appliances)
+- [IP Forwarding Configuration](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#ip-forwarding)
 
 ### AWS Networking Resources
 - [AWS Transit Gateway Documentation](https://docs.aws.amazon.com/vpc/latest/tgw/)
@@ -208,9 +318,7 @@ If you encounter routing or connectivity issues during the labs:
 - [Cloud Router Documentation](https://cloud.google.com/network-connectivity/docs/router)
 - [VPC Network Peering](https://cloud.google.com/vpc/docs/vpc-peering)
 - [GCP Routes Overview](https://cloud.google.com/vpc/docs/routes)
-- [Traffic Director and Load Balancing](https://cloud.google.com/traffic-director/docs)mz/nva-ha)
-- [NVA Performance Optimization](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/network-virtual-appliances)
-- [IP Forwarding Configuration](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#ip-forwarding)
+- [Traffic Director and Load Balancing](https://cloud.google.com/traffic-director/docs)
 
 ### Monitoring and Troubleshooting
 - [Network Watcher](https://docs.microsoft.com/en-us/azure/network-watcher/)
