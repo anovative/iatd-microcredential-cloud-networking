@@ -10,11 +10,13 @@
 2.  **Domain Name:** You need to own a domain name or have access to manage its DNS records at your domain registrar.
 3.  **Azure Cloud Shell:** This lab utilizes the Azure Cloud Shell.
 
+**Lab Conventions:**
+
+*   **Naming Conventions:** All resources created in this lab will be prefixed with `iatd_labs_08` to ensure easy identification and cleanup.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization) for any virtual networks created.
+*   **Location:** Choose a consistent Azure region.
+
 **Let's get started!**
-
-### Resource Naming Convention
-
-All resources created in this lab will be prefixed with `iatd_labs_08` to ensure easy identification and cleanup.
 
 ### Part 1: Create an Azure DNS Zone
 

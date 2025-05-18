@@ -10,11 +10,13 @@
 2.  **Existing Virtual Network:** You'll need an existing Virtual Network (VNet) and subnet. If you don't have one, create it using the methods learned in Lab 1.
 3.  **Existing Virtual Machine:** You should have an existing Azure Virtual Machine. If you don't have one, create a basic one (e.g., using the Azure Portal) before starting this lab. You can use a Linux or Windows VM.
 
+**Lab Conventions:**
+
+*   **Naming Conventions:** All resources created/modified in this lab will be prefixed with `iatd_labs_05` for easy identification and cleanup.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization).
+*   **Location:** Choose a consistent Azure region.
+
 **Let's get started!**
-
-### Resource Naming Convention
-
-All resources created/modified in this lab will be prefixed with `iatd_labs_05` for easy identification and cleanup.
 
 ### Part 1: Create a Resource Group (If You Don't Have One)
 

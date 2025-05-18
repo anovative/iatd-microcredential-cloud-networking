@@ -99,8 +99,8 @@
     ```bash
     VNET_NAME="iatd_labs_06_vnet"
     SUBNET_GATEWAY_NAME="GatewaySubnet"  # REQUIRED name for VPN Gateway subnet
-    ADDRESS_PREFIX="10.0.0.0/16"
-    SUBNET_GATEWAY_PREFIX="10.0.0.0/24"
+    ADDRESS_PREFIX="172.16.0.0/16"
+    SUBNET_GATEWAY_PREFIX="172.16.0.0/24"
 
     az network vnet create \
         --resource-group $RESOURCE_GROUP \

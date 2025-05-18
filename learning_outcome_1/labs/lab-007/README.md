@@ -10,11 +10,13 @@
 2.  **Existing Virtual Machine:** You should have an existing Azure Virtual Machine in a primary region (e.g., `australiaeast`). This will be the VM you replicate. If you don't have one, create a basic one. It's best if the VM has some basic software installed (e.g., a web server) so you can easily verify it's working after failover. Ensure you make a note of your vm login details, these will be required for the DR environment post failover.
 3.  **Basic Understanding of Azure and Virtualization:** Familiarity with Azure Virtual Machines, Resource Groups, and regions.
 
+**Lab Conventions:**
+
+*   **Naming Conventions:** All resources created in this lab will be prefixed with `iatd_labs_07` for easy identification and cleanup.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization).
+*   **Location:** Choose a consistent Azure region for your primary region.
+
 **Let's get started!**
-
-### Resource Naming Convention
-
-All resources created in this lab will be prefixed with `iatd_labs_07` for easy identification and cleanup.
 
 ### Part 1: Identify Primary and Secondary Regions
 

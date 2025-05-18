@@ -11,11 +11,13 @@
 3.  **Basic understanding of DNS concepts:** Familiarity with DNS records like A and CNAME is helpful.
 4.  **Familiarity with Virtual Networks:** A basic understanding of Azure Virtual Networks is needed.
 
+**Lab Conventions:**
+
+*   **Naming Conventions:** All resources created in this lab will be prefixed with `iatd_labs_09` to ensure easy identification and cleanup.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization) for virtual networks.
+*   **Location:** Choose a consistent Azure region.
+
 **Let's get started!**
-
-### Resource Naming Convention
-
-All resources created in this lab will be prefixed with `iatd_labs_09` to ensure easy identification and cleanup.
 
 ### Part 1: Setting Up the Lab Environment
 

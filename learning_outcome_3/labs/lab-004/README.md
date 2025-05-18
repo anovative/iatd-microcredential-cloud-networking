@@ -14,7 +14,7 @@
 
 *   **Azure Cloud Shell:** All PowerShell and CLI interactions will occur within the Azure Cloud Shell environment.
 *   **Naming Conventions:** Resource names follow the convention `iatd_labs_04_*`.
-*   **IP Address Range:** The `172.16.x.x` range will be used.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization).
 *   **Location:** Choose a consistent Azure region.
 
 #### Resource Naming (re-use from Lab 3 where applicable)
