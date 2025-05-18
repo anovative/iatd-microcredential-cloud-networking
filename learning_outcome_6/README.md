@@ -117,6 +117,14 @@ This learning outcome focuses on advanced hybrid networking scenarios and networ
    - Setting up network monitoring
    - Analyzing network performance
 
+### Capstone Lab
+
+[Multi-Cloud Advanced Hybrid Networking and Network Operations Capstone Lab](labs/lab-capstone/README.md)
+   - Advanced hybrid networking solutions using ExpressRoute
+   - Network performance monitoring and troubleshooting
+   - Network change management and disaster recovery
+   - Cross-cloud network operations challenges
+
 ## Learning Objectives
 
 By completing these labs, you will be able to:

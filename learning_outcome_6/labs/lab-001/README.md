@@ -15,7 +15,7 @@
 *   **Azure Cloud Shell:** All PowerShell and CLI interactions will occur within the Azure Cloud Shell environment.
 *   **Azure Portal:** The Azure Portal will be used for visualization and configuration tasks.
 *   **Naming Conventions:** Resource names follow the convention `iatd_labs_01_*`.
-*   **IP Address Range:** The `10.x.x.x` range will be used for the Azure VNet. The `192.168.1.0/24` range will represent the on-premises network.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used for the Azure VNet. The `172.16.100.0/24` range will represent the on-premises network (following the standardized IP addressing scheme).
 *   **Location:** Choose a consistent Azure region.
 
 #### Resource Naming
@@ -33,14 +33,14 @@
 ### Part 1: Planning a Hybrid Network and Simulating ExpressRoute
 
 1.  **Planning the Address Space:**
-    *   **Azure VNet:** `10.0.0.0/16`
-    *   **On-Premises Network:** `192.168.1.0/24`
+    *   **Azure VNet:** `172.16.0.0/16`
+    *   **On-Premises Network:** `172.16.100.0/24`
     *   Ensure that these address spaces do not overlap.
 
 2.  **Subnet Planning:**
-    *   `iatd_labs_01_subnet_web`: `10.0.1.0/24` (Public-facing web tier)
-    *   `iatd_labs_01_subnet_app`: `10.0.2.0/24` (Application tier)
-    *   `iatd_labs_01_subnet_db`: `10.0.3.0/24` (Database tier)
+    *   `iatd_labs_01_subnet_web`: `172.16.1.0/24` (Public-facing web tier)
+    *   `iatd_labs_01_subnet_app`: `172.16.2.0/24` (Application tier)
+    *   `iatd_labs_01_subnet_db`: `172.16.3.0/24` (Database tier)
 
 3.  **Simulating ExpressRoute (Conceptual):**
     *   Discuss the key components of ExpressRoute:
@@ -68,10 +68,10 @@
     SUBNET_WEB_NAME="iatd_labs_01_subnet_web"
     SUBNET_APP_NAME="iatd_labs_01_subnet_app"
     SUBNET_DB_NAME="iatd_labs_01_subnet_db"
-    ADDRESS_PREFIX="10.0.0.0/16"
-    SUBNET_WEB_PREFIX="10.0.1.0/24"
-    SUBNET_APP_PREFIX="10.0.2.0/24"
-    SUBNET_DB_PREFIX="10.0.3.0/24"
+    ADDRESS_PREFIX="172.16.0.0/16"
+    SUBNET_WEB_PREFIX="172.16.1.0/24"
+    SUBNET_APP_PREFIX="172.16.2.0/24"
+    SUBNET_DB_PREFIX="172.16.3.0/24"
 
     az network vnet create \
         --resource-group $RESOURCE_GROUP \
@@ -116,13 +116,13 @@
 
     ```bash
     ROUTE_TABLE_NAME="iatd_labs_01_routetable_app"
-    ONPREM_NEXT_HOP="10.0.0.100" #Replace with IP of your simulated on-prem router
+    ONPREM_NEXT_HOP="172.16.0.100" #Replace with IP of your simulated on-prem router
 
     az network route-table route create \
         --resource-group $RESOURCE_GROUP \
         --name RouteToOnPrem \
         --route-table-name $ROUTE_TABLE_NAME \
-        --address-prefix 192.168.1.0/24 \
+        --address-prefix 172.16.100.0/24 \
         --next-hop-type VirtualAppliance \
         --next-hop-ip-address $ONPREM_NEXT_HOP
     ```

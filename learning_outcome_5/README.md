@@ -37,6 +37,12 @@ This learning outcome focuses on implementing load balancing solutions and hybri
    - Configuring Site-to-Site VPN connections
    - Learning about ExpressRoute benefits and considerations
 
+7. [Capstone Lab: Multi-Cloud Load Balancing and Hybrid Connectivity](labs/lab-capstone/README.md)
+   - Implementing multi-tier load balancing architectures
+   - Configuring global load balancing across regions
+   - Creating hybrid connectivity solutions across cloud providers
+   - Designing resilient and high-performance multi-cloud solutions
+
 ### AWS Supplementary Labs
 
 1. [AWS Lab 001: Elastic Load Balancing with AWS Application Load Balancer](labs/sup-aws/lab-001/README.md)
