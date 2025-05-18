@@ -53,7 +53,7 @@
             },
             "vnetAddressPrefix": {
               "type": "string",
-              "defaultValue": "10.0.0.0/16",
+              "defaultValue": "172.16.0.0/16",
               "metadata": {
                 "description": "Virtual Network Address Prefix"
               }
@@ -67,7 +67,7 @@
             },
             "subnet1Prefix": {
               "type": "string",
-              "defaultValue": "10.0.1.0/24",
+              "defaultValue": "172.16.1.0/24",
               "metadata": {
                 "description": "Subnet 1 Address Prefix"
               }
@@ -81,7 +81,7 @@
             },
             "subnet2Prefix": {
               "type": "string",
-              "defaultValue": "10.0.2.0/24",
+              "defaultValue": "172.16.2.0/24",
               "metadata": {
                 "description": "Subnet 2 Address Prefix"
               }
@@ -139,6 +139,16 @@
 
     # Create resource group if it doesn't exist
     az group create --name $RESOURCE_GROUP --location $LOCATION --output json --only-show-errors
+
+# Expected Output:
+# {
+#   "id": "/subscriptions/<subscription_id>/resourceGroups/iatd_labs_11_rg",
+#   "location": "eastus",
+#   ...
+#   "name": "iatd_labs_11_rg",
+#   "properties": { "provisioningState": "Succeeded" },
+#   ...
+# }
     ```
 
 2.  **Deploy ARM Template with Inline Parameter Overrides:**
@@ -148,11 +158,11 @@
       --resource-group $RESOURCE_GROUP \
       --template-file $TEMPLATE_FILE \
       --parameters vnetName=iatd_labs_11_vnet_dev \
-                   vnetAddressPrefix=10.100.0.0/16 \
+                   vnetAddressPrefix=172.16.10.0/16 \
                    subnet1Name=webSubnet \
-                   subnet1Prefix=10.100.1.0/24 \
+                   subnet1Prefix=172.16.11.0/24 \
                    subnet2Name=appSubnet \
-                   subnet2Prefix=10.100.2.0/24 \
+                   subnet2Prefix=172.16.12.0/24 \
       --location $LOCATION
     ```
 
@@ -171,19 +181,19 @@
               "value": "iatd_labs_11_vnet_test"
             },
             "vnetAddressPrefix": {
-              "value": "10.101.0.0/16"
+              "value": "172.16.20.0/16"
             },
             "subnet1Name": {
               "value": "webSubnetTest"
             },
             "subnet1Prefix": {
-              "value": "10.101.1.0/24"
+              "value": "172.16.21.0/24"
             },
             "subnet2Name": {
               "value": "appSubnetTest"
             },
             "subnet2Prefix": {
-              "value": "10.101.2.0/24"
+              "value": "172.16.22.0/24"
             },
             "location": {
               "value": "westus2"
@@ -228,12 +238,17 @@ To avoid incurring unnecessary costs, it's essential to clean up the resources c
 
     ```bash
     az group delete --name $RESOURCE_GROUP --yes
+
+# Expected Output:
+# (Resource group deletion confirmation and status)
     ```
 
-**Learning Outcomes:**
+---
 
-*   Successfully created a parameterized ARM template to define an Azure Virtual Network with flexible subnet configurations.
-*   Successfully deployed the ARM template, overriding parameter values inline to customize the deployment.
-*   Successfully deployed the ARM template using a parameter file to provide configuration values.
-*   Successfully verified the deployments using the Azure Portal and Azure CLI.
-*   Understood the benefits of using parameters in ARM templates for reusable and customizable infrastructure as code.
+## What You Learned
+
+- How to create a parameterized ARM template for Azure VNets and subnets using standardized IP ranges (172.16.0.0/16).
+- How to deploy ARM templates with inline parameter overrides and with a parameter file.
+- How to verify Azure resources using both the Azure Portal and Azure CLI.
+- The importance of cleaning up cloud resources to avoid unnecessary costs.
+- The value of parameterization for reusable, flexible infrastructure as code.
