@@ -14,7 +14,7 @@
 
 *   **Azure Cloud Shell:** All PowerShell and CLI interactions will occur within the Azure Cloud Shell environment.
 *   **Naming Conventions:** Resource names follow the convention `iatd_labs_01_*`.
-*   **IP Address Range:** The `172.16.x.x` range will be used.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization).
 *   **Location:** Choose a consistent Azure region.
 
 #### Resource Naming
@@ -126,7 +126,7 @@
     RESOURCE_GROUP="iatd_labs_01_rg"
     VNET_NAME="iatd_labs_01_vnet_cli"
     LOCATION="eastus" # Your Region
-    ADDRESS_PREFIX="172.16.2.0/16"
+    ADDRESS_PREFIX="172.16.0.0/16"
     SUBNET_NAME="iatd_labs_01_subnet_cli"
     SUBNET_PREFIX="172.16.2.0/24"
     ```

@@ -11,6 +11,13 @@
 3.  **Cloud Shell:** The CLI and PowerShell commands should be run within the Azure Cloud Shell.
 4.  **PowerShell Module:** If you plan to execute PowerShell commands locally, install the Azure Az PowerShell module from the Azure documentation.
 
+**Lab Conventions:**
+
+*   **Azure Cloud Shell:** All PowerShell and CLI interactions will occur within the Azure Cloud Shell environment.
+*   **Naming Conventions:** Resource names follow the convention `iatd_labs_03_*`.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization) for IPv4 addressing.
+*   **Location:** Choose a consistent Azure region.
+
 ### Task 1: Create a Resource Group
 
 #### Method: Azure CLI

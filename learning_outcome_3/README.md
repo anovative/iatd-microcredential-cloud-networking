@@ -65,9 +65,13 @@ These labs provide comprehensive coverage of Azure network security concepts and
 **Objective:** This lab introduces you to the fundamental concepts of monitoring and logging in Azure. You will learn about different monitoring types, log analysis techniques, performance baselines, alert thresholds, and core Azure monitoring services.  
 **Estimated Time:** 75-90 minutes
 
-### [Lab 6: Monitoring and Logging in Azure - Advanced](/learning_outcome_3/labs/lab-006)
+### [Lab 6: Advanced Monitoring and Logging in Azure](/learning_outcome_3/labs/lab-006)
 **Objective:** This lab builds upon the fundamentals by exploring more advanced monitoring and logging techniques in Azure. You will learn how to use Azure Network Watcher, NSG Flow Logs, Azure Resource Graph, and Azure Service Health.  
 **Estimated Time:** 75-90 minutes
+
+### [Capstone Lab: Multi-Cloud Network Security and Access Control](/learning_outcome_3/labs/lab-capstone)
+**Objective:** This comprehensive capstone lab integrates concepts from all previous labs, challenging you to implement enterprise-grade security solutions across Azure, AWS, and GCP. You'll design multi-layered security architectures, implement DDoS protection, and create comprehensive monitoring solutions.  
+**Estimated Time:** 180-240 minutes
 
 ### Supplementary Labs (Multi-Cloud)
 

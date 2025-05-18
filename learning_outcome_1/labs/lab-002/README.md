@@ -11,6 +11,13 @@
 3.  **Cloud Shell:** We will use Azure Cloud Shell.
 4.  **Virtual Network:** An existing virtual network is required. If you completed Lab 1, you can use a VNet created there. If not, create one using the Azure Portal, PowerShell, or CLI. The VNet should be named `iatd_labs_02_vnet`, in resource group `iatd_labs_02_rg`, with address space `172.16.0.0/16`.
 
+**Lab Conventions:**
+
+*   **Azure Cloud Shell:** All PowerShell and CLI interactions will occur within the Azure Cloud Shell environment.
+*   **Naming Conventions:** Resource names follow the convention `iatd_labs_02_*`.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization).
+*   **Location:** Choose a consistent Azure region.
+
 **Let's get started!**
 
 ### Part 1: Creating Subnets

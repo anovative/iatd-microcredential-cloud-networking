@@ -12,9 +12,11 @@ In this lab, you will establish a secure Site-to-Site VPN connection between an 
 2.  **AWS Account:** You need an active AWS account. If you don't have one, you can create a free account at [https://aws.amazon.com/](https://aws.amazon.com/).
 3.  **Basic understanding of networking concepts:** Familiarity with IP addressing, subnets, routing, and VPNs is helpful.
 
-**Resource Naming Convention:**
+**Lab Conventions:**
 
-All resources created in this lab will be prefixed with `iatd_labs_04` to ensure easy identification and cleanup.
+*   **Naming Conventions:** All resources created in this lab will be prefixed with `iatd_labs_04` to ensure easy identification and cleanup.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization), with Azure using 172.16.2.0/24 and AWS using 172.16.1.0/24.
+*   **Location:** Choose a consistent Azure region.
 
 **Lab Instructions:**
 

@@ -24,6 +24,12 @@ Before starting, ensure you have:
 - Familiarity with cloud CLI tools
 - Completed the prerequisite networking labs
 
+## Lab Conventions
+
+- **Naming Conventions:** All resources created in this lab will be prefixed with `iatd_capstone_` to ensure easy identification and cleanup.
+- **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization) for all cloud environments.
+- **Location:** Choose consistent regions within each cloud provider.
+
 ## Exercise Framework
 The exercises are structured according to complexity levels to help you progress:
 - **Foundation Level**: Core concepts and single-cloud implementations

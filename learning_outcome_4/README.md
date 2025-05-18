@@ -97,6 +97,10 @@ These labs provide comprehensive coverage of service integration and network des
 **Objective:** This lab focuses on designing and implementing secure service integration solutions in Azure. You'll learn how to choose appropriate communication patterns, select network integration components, implement service discovery, and secure integrations.  
 **Estimated Time:** 90-120 minutes
 
+### [Capstone Lab: Multi-Cloud Service Integration and Network Design](/learning_outcome_4/labs/lab-capstone)
+**Objective:** This comprehensive capstone lab integrates concepts from all previous labs, challenging you to implement enterprise-grade service integration solutions across Azure, AWS, and GCP. You'll design secure connectivity patterns, implement private endpoints, and create hub-and-spoke architectures with hybrid connectivity.  
+**Estimated Time:** 180-240 minutes
+
 ### Supplementary Labs (Multi-Cloud)
 
 These supplementary labs demonstrate how service integration and network design concepts covered in the Azure labs can be applied in other major cloud platforms:

@@ -10,11 +10,13 @@
 2.  **Azure Cloud Shell:** This lab utilizes the Azure Cloud Shell, so ensure you have access to it through the Azure portal.
 3.  **Basic Understanding of Networking:** A general understanding of IP addressing, subnets, and NAT is helpful.
 
+**Lab Conventions:**
+
+*   **Naming Conventions:** All resources created in this lab will be prefixed with `iatd_labs_06` to ensure easy identification and cleanup.
+*   **IP Address Range:** The `172.16.0.0/16` range will be used (as per standardization).
+*   **Location:** Choose a consistent Azure region.
+
 **Let's get started!**
-
-### Resource Naming Convention
-
-All resources created in this lab will be prefixed with `iatd_labs_06` to ensure easy identification and cleanup.
 
 ### Part 1: Create a Resource Group
 
